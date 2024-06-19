@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 export function Footer() {
     return (
         <div className="flex flex-col items-center justify-center p-8 pt-16">
-            <div src="friends.jpg" className="p-20 w-full rounded-lg bg-cover bg-center backdrop-brightness-200 bg-[url('friends.jpg')] flex flex-col items-center justify-center gap-8">
+            <img src="friends.jpg" className="p-20 w-full rounded-lg bg-cover bg-center backdrop-brightness-200 bg-[url('friends.jpg')] flex flex-col items-center justify-center gap-8">
                 <h2 className="text-5xl font-bold tracking-tight text-primary">
                     {"L'Association Soleil Bleu"}
                 </h2>
@@ -27,7 +27,7 @@ export function Footer() {
                 </div>
                 </div>
                 
-            </div>
+            </img>
             <p className="font-secondary font-thin mt-16" >
                 Soleil Bleu &copy; 2024
             </p>

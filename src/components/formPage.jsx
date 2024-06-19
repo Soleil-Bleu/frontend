@@ -49,8 +49,43 @@ export function FormPage() {
 
     try {
       const record = await base('formulaire').create(data);
-      console.log(record);
-      alert('Form submitted successfully');
+      console.log('Airtable Record:', record);
+
+      // Retrieve the ID from Airtable
+      const airtableId = record[0].fields.id;
+
+      // Fetch the data from Airtable using the retrieved ID
+      const fetchedRecord = await base('formulaire').find(record[0].id);
+      console.log('Fetched Record:', fetchedRecord);
+
+      // Prepare the data for the simulation request
+      const simulationData = {
+        id: fetchedRecord.fields.id,
+        filename: 'data_exemple', // This should be adapted to match your filename logic
+        prix_achat: fetchedRecord.fields.prix_achat_elec,
+        type_centrale: fetchedRecord.fields.type,
+        montant_pret: fetchedRecord.fields.montant,
+        taux_pret: fetchedRecord.fields.taux,
+        duree_pret: 10, // Hardcoded for example; adapt as needed
+        devis_installation: false, // Hardcoded for example; adapt as needed
+        localisation: fetchedRecord.fields.orientation, // Example mapping
+        annee: 2022, // Example hardcoded value; adapt as needed
+        puissances: fetchedRecord.fields.scenarios.split(',').map(Number), // Assuming scenarios are comma-separated
+      };
+
+      // Make the API call to calculate the simulation
+      const response = await fetch('http://127.0.0.1:8000/calc_simulation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(simulationData),
+      });
+
+      const result = await response.json();
+      console.log('Simulation Result:', result);
+
+      alert('Form submitted and simulation calculated successfully');
     } catch (error) {
       console.error(error);
       alert('Error submitting form: ' + error.message);
@@ -58,9 +93,9 @@ export function FormPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6">Submit Form</h2>
+    <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="bg-white m-4 p-8 rounded shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6">Nouvelle étude</h2>
         <form onSubmit={handleSubmit}>
           {[
             { label: 'Name', name: 'name', type: 'text' },
