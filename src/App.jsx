@@ -10,7 +10,7 @@ import { Tarifs } from "@/components/tarifs";
 import { Footer } from "@/components/footer";
 import { Graph } from '@/components/graph';
 import { FormPage } from '@/components/formPage';
-
+import ResultPage from '@/components/resultPage';
 
 function App() {
   return (
@@ -18,22 +18,18 @@ function App() {
       <Routes>
         <Route path="/" element={
           <>
-          <Navbar />
-          <Hero />
-          <Second />
-          <Kpi />
-          <Third />
-          <Slider />
-          <Tarifs />
-          <Footer />
+            <Navbar />
+            <Hero />
+            <Second />
+            <Kpi />
+            <Third />
+            <Slider />
+            <Tarifs />
+            <Footer />
           </>
         } />
-        <Route path="/result" element={
-          <Graph />
-        } />
-        <Route path='/new' element={
-          <FormPage />
-        } />
+        <Route path="/result/:id" element={<ResultPage />} />
+        <Route path="/new" element={<FormPage />} />
       </Routes>
     </Router>
   );

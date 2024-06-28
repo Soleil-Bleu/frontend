@@ -1,143 +1,297 @@
-import React, { useState } from 'react';
-import Airtable from 'airtable';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Slider } from "@/components/ui/slider"
+import { Button } from "@/components/ui/button"
+import { Home, ParkingSquare, Zap } from 'lucide-react';
 
 export function FormPage() {
   const [formData, setFormData] = useState({
-    name: '',
     id: '',
-    inclinaison: '',
-    orientation: '',
-    type: '',
-    prix_achat_elec: '',
-    surface: '',
-    pret_bancaire: false,
-    montant: '',
-    taux: '',
-    scenarios: '',
+    prix_achat: '',
+    type_installation: '',
+    montant_pret: '',
+    taux_pret: '',
+    duree_pret: '',
+    devis_installation: 0,
+    localisation: '',
+    annee: 2024,
+    powers: [100, 400],
+    file: null,
   });
+
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      id: Math.floor(Math.random() * 1000000),
+    }));
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: type === 'checkbox' ? checked : value,
-    });
+    }));
+  };
+
+  const handleSliderChange = (values) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      powers: values,
+    }));
+  };
+
+  const handleFileChange = (e) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      file: e.target.files[0],
+    }));
+  };
+
+  const handleSelectChange = (value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      type_installation: value,
+    }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.prix_achat) newErrors.prix_achat = 'Le prix est requis.';
+    if (!formData.type_installation) newErrors.type_installation = "Le type d'installation est requis.";
+    if (!formData.localisation) newErrors.localisation = 'La localisation est requise.';
+    if (!formData.annee) newErrors.annee = "L'année est requise.";
+    if (!formData.powers || formData.powers.length !== 2) newErrors.powers = 'Les puissances sont requises et doivent avoir deux valeurs.';
+    if (!formData.file) newErrors.file = 'Le fichier est requis.';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
 
-    const base = new Airtable({ apiKey: 'patwxX9gwQO9Y9r4W.a6a47fe6a1f9e00d45f30edf2f4b81b9c8e22acfe3ca76e14abc9a98191b7dfb' }).base('appD8J2JeI5KBNKvL');
+    const formDataObj = new FormData();
+    formDataObj.append('file', formData.file);
+    formDataObj.append('id', formData.id);
+    formDataObj.append('prix_achat', formData.prix_achat);
+    formDataObj.append('type_centrale', formData.type_installation);
+    formDataObj.append('montant_pret', formData.montant_pret || 0); // Provide default value
+    formDataObj.append('taux_pret', formData.taux_pret || 0); // Provide default value
+    formDataObj.append('duree_pret', formData.duree_pret || 0); // Provide default value
+    formDataObj.append('localisation', formData.localisation);
+    formDataObj.append('annee', formData.annee);
+    formDataObj.append('puissances', JSON.stringify(formData.powers));
 
-    const data = [
-      {
-        fields: {
-          Name: formData.name,
-          id: formData.id,
-          inclinaison: formData.inclinaison ? Number(formData.inclinaison) : 0,
-          orientation: formData.orientation,
-          type: formData.type,
-          prix_achat_elec: formData.prix_achat_elec ? Number(formData.prix_achat_elec) : 0,
-          surface: formData.surface ? Number(formData.surface) : 0,
-          pret_bancaire: formData.pret_bancaire,
-          montant: formData.montant ? Number(formData.montant) : 0,
-          taux: formData.taux ? Number(formData.taux) : 0,
-          scenarios: formData.scenarios,
-        },
-      },
-    ];
+    console.log('Form Data:', Object.fromEntries(formDataObj.entries()));
 
     try {
-      const record = await base('formulaire').create(data);
-      console.log('Airtable Record:', record);
-
-      // Retrieve the ID from Airtable
-      const airtableId = record[0].fields.id;
-
-      // Fetch the data from Airtable using the retrieved ID
-      const fetchedRecord = await base('formulaire').find(record[0].id);
-      console.log('Fetched Record:', fetchedRecord);
-
-      // Prepare the data for the simulation request
-      const simulationData = {
-        id: fetchedRecord.fields.id,
-        filename: 'data_exemple', // This should be adapted to match your filename logic
-        prix_achat: fetchedRecord.fields.prix_achat_elec,
-        type_centrale: fetchedRecord.fields.type,
-        montant_pret: fetchedRecord.fields.montant,
-        taux_pret: fetchedRecord.fields.taux,
-        duree_pret: 10, // Hardcoded for example; adapt as needed
-        devis_installation: false, // Hardcoded for example; adapt as needed
-        localisation: fetchedRecord.fields.orientation, // Example mapping
-        annee: 2022, // Example hardcoded value; adapt as needed
-        puissances: fetchedRecord.fields.scenarios.split(',').map(Number), // Assuming scenarios are comma-separated
-      };
-
-      // Make the API call to calculate the simulation
-      const response = await fetch('http://127.0.0.1:8000/calc_simulation', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(simulationData),
-      });
-
-      const result = await response.json();
-      console.log('Simulation Result:', result);
-
-      alert('Form submitted and simulation calculated successfully');
+      const response = await axios.post('http://localhost:8000/calc_simulation', formDataObj);
+      window.location.href = `/result/${formData.id}`;
     } catch (error) {
-      console.error(error);
-      alert('Error submitting form: ' + error.message);
+      if (error.response && error.response.data.detail) {
+        setErrors(error.response.data.detail);
+      }
     }
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center">
-      <div className="bg-white m-4 p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6">Nouvelle étude</h2>
-        <form onSubmit={handleSubmit}>
-          {[
-            { label: 'Name', name: 'name', type: 'text' },
-            { label: 'ID', name: 'id', type: 'text' },
-            { label: 'Inclinaison', name: 'inclinaison', type: 'number' },
-            { label: 'Orientation', name: 'orientation', type: 'text' },
-            { label: 'Type', name: 'type', type: 'text' },
-            { label: 'Prix Achat Elec', name: 'prix_achat_elec', type: 'number' },
-            { label: 'Surface', name: 'surface', type: 'number' },
-            { label: 'Montant', name: 'montant', type: 'number' },
-            { label: 'Taux', name: 'taux', type: 'number' },
-            { label: 'Scenarios', name: 'scenarios', type: 'text' },
-          ].map((field) => (
-            <div key={field.name} className="mb-4">
-              <label className="block text-gray-700">{field.label}</label>
-              <input
-                type={field.type}
-                name={field.name}
-                value={formData[field.name]}
-                onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              />
-            </div>
-          ))}
-          <div className="mb-4">
-            <label className="block text-gray-700">Pret Bancaire</label>
-            <input
-              type="checkbox"
-              name="pret_bancaire"
-              checked={formData.pret_bancaire}
-              onChange={handleChange}
-              className="mt-1 block"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            Submit
-          </button>
-        </form>
+    <>
+      <div className="z-[-1] fixed inset-0 h-full w-full bg-[radial-gradient(#808387_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_10%,transparent_100%)]" />
+      <div className="flex justify-center flex-col p-16 items-center w-full">
+        <Card className="bg-background p-6">
+          <CardHeader>
+            <CardTitle>Nouvelle simulation</CardTitle>
+            <CardDescription>
+              Remplissez le formulaire pour lancer la simulation de votre projet.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className='grid pt-4 grid-cols-2 w-full items-center gap-14'>
+              <div className="grid w-full max-w-sm items-center gap-2">
+                <Label htmlFor="prix_achat">Prix auquel vous achetez l'électricité :</Label>
+                <div className='flex flex-row items-center space-x-2 space-y-0'>
+                  <Input
+                    className="text-right w-3/4 [&::-webkit-inner-spin-button]:appearance-none"
+                    name="prix_achat"
+                    id="prix_achat"
+                    type="number"
+                    value={formData.prix_achat}
+                    onChange={handleChange}
+                    placeholder="25" />
+                  <Label htmlFor="prix_achat">c€/kWh</Label>
+                </div>
+                {errors.prix_achat && <span className="text-red-500">{errors.prix_achat}</span>}
+              </div>
+              <div className="grid w-3/4 max-w-sm items-center gap-2">
+                <Label htmlFor="type_installation">Type d'installation :</Label>
+                <Select onValueChange={handleSelectChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sélectionnez votre projet" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="toiture">
+                      <div className='flex items-center gap-2'>
+                        <Home className="mr-2 h-4 w-4" />
+                        <span>Toiture</span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="ombriere">
+                      <div className='flex items-center gap-2'>
+                        <ParkingSquare className="mr-2 h-4 w-4" />
+                        <span>Ombrière</span>
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+                {errors.type_installation && <span className="text-red-500">{errors.type_installation}</span>}
+              </div>
+              <div className="grid w-full max-w-sm items-center gap-2">
+                <div className='flex flex-row gap-2 items-center'>
+                  <Label htmlFor="localisation">Région du projet :</Label>
+                </div>
+                <div className='flex w-3/4 flex-row items-center space-x-2 space-y-0'>
+                  <Input
+                    name="localisation"
+                    id="localisation"
+                    type="text"
+                    value={formData.localisation}
+                    onChange={handleChange}
+                    placeholder="Loire Atlantique" />
+                </div>
+                {errors.localisation && <span className="text-red-500">{errors.localisation}</span>}
+              </div>
+              <div className="grid w-full max-w-sm items-center gap-2">
+                <div className='flex flex-row gap-2 items-center'>
+                  <Label htmlFor="annee">Année de mise en service :</Label>
+                </div>
+                <div className='flex w-3/4 flex-row items-center space-x-2 space-y-0'>
+                  <Input
+                    name="annee"
+                    id="annee"
+                    type="number"
+                    value={formData.annee}
+                    onChange={handleChange}
+                    placeholder="2024" />
+                </div>
+                {errors.annee && <span className="text-red-500">{errors.annee}</span>}
+              </div>
+              <div className="grid col-span-2 w-full items-center gap-6">
+                <div className='flex flex-row gap-2 items-center'>
+                  <Label htmlFor="powers">Gamme de puissance à étudier :</Label>
+                </div>
+                <div className='px-8'>
+                  <Slider
+                    min={0}
+                    max={500}
+                    step={50}
+                    minStepsBetweenThumbs={2}
+                    value={formData.powers}
+                    onValueChange={handleSliderChange}
+                    formatLabel={(value) => `${value} kWh`}
+                  />
+                </div>
+                {errors.powers && <span className="text-red-500">{errors.powers}</span>}
+              </div>
+              <div className="flex flex-col col-span-2 gap-4">
+                <div className='flex flex-row gap-2 items-center'>
+                  <Label htmlFor="file">Relevé de consommation Enedis :</Label>
+                </div>
+                <Input
+                  className='block h-9 px-0 py-0 file:bg-secondary/75 file:px-4 file:py-2 file:cursor-pointer file:mr-4 hover:file:bg-secondary'
+                  placeholder="Votre relevé de consommation Enedis"
+                  type="file"
+                  accept="text/csv"
+                  onChange={handleFileChange}
+                />
+                {errors.file && <span className="text-red-500">{errors.file}</span>}
+                <Button asChild variant='link' className='w-full text-right m-0 h-2 text-muted-foreground'>
+                  <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Où trouver ce fichier ?</a>
+                </Button>
+              </div>
+              <div className='flex flex-col col-span-2 gap-4 bg-secondary/40 p-4 rounded-md'>
+                <div className="flex flex-row items-center gap-2">
+                  <Label className="text-lg">Prêt</Label>
+                  <p className='text-primary/80 text-xs'>(optionnel)</p>
+                </div>
+                <div className='flex flex-row gap-8'>
+                  <div className="grid w-full max-w-sm items-center gap-2">
+                    <Label htmlFor="montant_pret">Montant</Label>
+                    <div className='flex flex-row items-center space-x-2 space-y-0'>
+                      <Input
+                        className="text-right [&::-webkit-inner-spin-button]:appearance-none"
+                        name="montant_pret"
+                        id="montant_pret"
+                        type="number"
+                        value={formData.montant_pret}
+                        onChange={handleChange}
+                        placeholder="15000" />
+                      <Label htmlFor="montant_pret">€</Label>
+                    </div>
+                    {errors.montant_pret && <span className="text-red-500">{errors.montant_pret}</span>}
+                  </div>
+                  <div className="grid w-full max-w-sm items-center gap-2">
+                    <Label htmlFor="taux_pret">Taux</Label>
+                    <div className='flex flex-row items-center space-x-2 space-y-0'>
+                      <Input
+                        className="text-right [&::-webkit-inner-spin-button]:appearance-none"
+                        name="taux_pret"
+                        id="taux_pret"
+                        type="number"
+                        value={formData.taux_pret}
+                        onChange={handleChange}
+                        placeholder="5" />
+                      <Label htmlFor="taux_pret">%</Label>
+                    </div>
+                    {errors.taux_pret && <span className="text-red-500">{errors.taux_pret}</span>}
+                  </div>
+                  <div className="grid w-full max-w-sm items-center gap-2">
+                    <Label htmlFor="duree_pret">Durée</Label>
+                    <div className='flex flex-row items-center space-x-2 space-y-0'>
+                      <Input
+                        className="text-right [&::-webkit-inner-spin-button]:appearance-none"
+                        name="duree_pret"
+                        id="duree_pret"
+                        type="number"
+                        value={formData.duree_pret}
+                        onChange={handleChange}
+                        placeholder="10" />
+                      <Label htmlFor="duree_pret">ans</Label>
+                    </div>
+                    {errors.duree_pret && <span className="text-red-500">{errors.duree_pret}</span>}
+                  </div>
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="col-span-2 font-semibold px-6 py-4 rounded-sm flex flex-row items-center justify-center group bg-primary stroke-ring hover:bg-accent-foreground"
+              >
+                <Zap className="mr-2 h-4 w-4 text-primary-foreground group-hover:rotate-180 ease-in-out duration-500" />
+                <span className="text-primary-foreground">Lancer la Simulation</span>
+              </button>
+            </form>
+          </CardContent>
+        </Card>
       </div>
-    </div>
+    </>
   );
 }
