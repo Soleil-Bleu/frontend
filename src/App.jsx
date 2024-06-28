@@ -30,6 +30,7 @@ function App() {
         } />
         <Route path="/result/:id" element={<ResultPage />} />
         <Route path="/new" element={<FormPage />} />
+        <Route path="/result" element={<Graph />} />
       </Routes>
     </Router>
   );
