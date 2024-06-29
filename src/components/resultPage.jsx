@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { Graph } from '@/components/graph';
 
 const ResultPage = () => {
   const { id } = useParams();
@@ -13,13 +14,15 @@ const ResultPage = () => {
       try {
         const response = await axios.get(`http://localhost:8000/simulation_result/${id}`);
         const data = response.data;
+        console.log('API Response:', data); // Log the API response
         setStatus(data.status);
         if (data.status === 'Completed') {
-          setResults(data.results);
+          setResults(data.results); // Access the nested results field
         } else if (data.status === 'Error') {
           setError(data.error);
         }
       } catch (err) {
+        console.error('API Error:', err);
         setError(err.response ? err.response.data.detail : err.message);
       }
     };
@@ -45,7 +48,7 @@ const ResultPage = () => {
   return (
     <div>
       <h1>Results for Simulation ID: {id}</h1>
-      <pre>{JSON.stringify(results, null, 2)}</pre>
+      {results && <Graph data={results} />}
     </div>
   );
 };

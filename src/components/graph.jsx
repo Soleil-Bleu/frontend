@@ -1,176 +1,6 @@
 import { Line, CartesianGrid, XAxis, YAxis, Tooltip, Area, Legend, ComposedChart, ResponsiveContainer, LabelList } from 'recharts';
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Ring } from '@/components/ring';
-
-const data = [
-    { puissance: 50, amortissement: 26, ac: 37, ap: 8, },
-    { puissance: 100, amortissement: 20, ac: 26, ap: 9, },
-    { puissance: 150, amortissement: 14, ac: 16, ap: 10, },
-    { puissance: 200, amortissement: 10, ac: 13, ap: 12, },
-    { puissance: 250, amortissement: 8, ac: 12, ap: 15, },
-    { puissance: 300, amortissement: 9, ac: 11, ap: 19, },
-    { puissance: 350, amortissement: 13, ac: 10, ap: 24, },
-    { puissance: 400, amortissement: 18, ac: 8, ap: 30, },
-    { puissance: 450, amortissement: 26, ac: 7, ap: 38, },
-];
-
-const scenarios = [
-    {
-        name: 'Rendement',
-        puissance: 200,
-        percentage: 30,
-        indicateurs: [
-            {
-                title: 'Auto-consommation',
-                percentage: 56,
-                value: 34,
-                unit: 'kWh'
-            },
-            {
-                title: 'Auto-production',
-                percentage: 36,
-                value: 24,
-                unit: 'kWh'
-            },
-            {
-                title: 'AMMO',
-                percentage: 86,
-                value: 94,
-                unit: 'joules'
-            },
-            {
-                title: 'TRI',
-                percentage: 16,
-                value: 4,
-                unit: 'ans'
-            },
-            {
-                title: 'Bénéfices totaux',
-                percentage: 80,
-                value: 45,
-                unit: 'k€'
-            },
-            {
-                title: 'Investissement',
-                percentage: 26,
-                value: 14,
-                unit: 'k€'
-            }
-        ]
-    },
-    {
-        name: 'Amortissement',
-        puissance: 300,
-        percentage: 60,
-        indicateurs: [
-            {
-                title: 'Auto-consommation',
-                percentage: 50,
-                value: 49,
-                unit: 'kWh'
-            },
-            {
-                title: 'Auto-production',
-                percentage: 60,
-                value: 45,
-                unit: 'kWh'
-            },
-            {
-                title: 'AMMO',
-                percentage: 68,
-                value: 48,
-                unit: 'joules'
-            },
-            {
-                title: 'TRI',
-                percentage: 61,
-                value: 6,
-                unit: 'ans'
-            },
-            {
-                title: 'Bénéfices totaux',
-                percentage: 89,
-                value: 54,
-                unit: 'k€'
-            },
-            {
-                title: 'Investissement',
-                percentage: 86,
-                value: 1,
-                unit: 'k€'
-            }
-        ]
-    },
-    {
-        name: 'Indépendance',
-        puissance: 400,
-        percentage: 70,
-        indicateurs: [
-            {
-                title: 'Auto-consommation',
-                percentage: 56,
-                value: 49,
-                unit: 'kWh'
-            },
-            {
-                title: 'Auto-production',
-                percentage: 96,
-                value: 4,
-                unit: 'kWh'
-            },
-            {
-                title: 'AMMO',
-                percentage: 76,
-                value: 4,
-                unit: 'joules'
-            },
-            {
-                title: 'TRI',
-                percentage: 96,
-                value: 4,
-                unit: 'ans'
-            },
-            {
-                title: 'Bénéfices totaux',
-                percentage: 48,
-                value: 45,
-                unit: 'k€'
-            },
-            {
-                title: 'Investissement',
-                percentage: 63,
-                value: 14,
-                unit: 'k€'
-            }
-        ]
-    }
-]
-
-const VULGA = {
-    'Rendement':
-    {
-        objectif: `
-        L'objectif de rendement optimal pour une étude de panneaux solaires vise à maximiser l'efficacité de la conversion 
-        de l'énergie solaire en électricité. Il s'agit d'optimiser l'orientation et l'inclinaison des panneaux pour capter 
-        le maximum de rayonnement solaire tout au long de l'année.`
-    },
-    'Amortissement':
-    {
-        objectif: `
-        Pour l'amortissement, l'objectif est de réduire le temps nécessaire pour que l'investissement initial dans les 
-        panneaux solaires soit compensé par les économies réalisées sur les factures d'électricité. Cela implique une 
-        analyse détaillée des coûts, des subventions disponibles, et de l'efficacité énergétique pour assurer une 
-        rentabilité maximale du projet à moyen et long terme.`
-    },
-    'Indépendance':
-    {
-        objectif: `Concernant l'indépendance énergétique, l'ambition est de minimiser la dépendance aux réseaux 
-        énergétiques traditionnels en favorisant l'autoproduction et l'autoconsommation d'électricité solaire. 
-        Cela passe par une conception systémique incluant le stockage de l'énergie et la gestion intelligente de la 
-        production et de la consommation, visant une autonomie énergétique maximale et un impact environnemental réduit.`
-    }
-
-}
 
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -181,12 +11,78 @@ const CustomTooltip = ({ active, payload, label }) => {
             </div>
         );
     }
-
     return null;
 };
 
+const VULGA = {
+    'Puissance maximale': {
+        objectif: `L'objectif de rendement optimal pour une étude de panneaux solaires vise à maximiser l'efficacité de la conversion 
+        de l'énergie solaire en électricité. Il s'agit d'optimiser l'orientation et l'inclinaison des panneaux pour capter 
+        le maximum de rayonnement solaire tout au long de l'année.`
+    },
+    'Amortissement le plus rapide': {
+        objectif: `Pour l'amortissement, l'objectif est de réduire le temps nécessaire pour que l'investissement initial dans les 
+        panneaux solaires soit compensé par les économies réalisées sur les factures d'électricité. Cela implique une 
+        analyse détaillée des coûts, des subventions disponibles, et de l'efficacité énergétique pour assurer une 
+        rentabilité maximale du projet à moyen et long terme.`
+    },
+    '100% autoconsommation': {
+        objectif: `C’est quand tu consomme tout ce que tes panneaux produisent. Du coup faut chercher la puissance maximale qui te permet d’avoir 100% d’AC (il faut la puissance max pour taux_AC > 99%).`
+    },
+    'BEPOS': {
+        objectif: `Concernant l'indépendance énergétique, l'ambition est de minimiser la dépendance aux réseaux 
+        énergétiques traditionnels en favorisant l'autoproduction et l'autoconsommation d'électricité solaire. 
+        Cela passe par une conception systémique incluant le stockage de l'énergie et la gestion intelligente de la 
+        production et de la consommation, visant une autonomie énergétique maximale et un impact environnemental réduit.`
+    },
+    'Bénéfices les plus importants': {
+        objectif: `Il s'agit de maximiser les bénéfices totaux sur une période de 20 ans.`
+    },
+    'Le plus rentable': {
+        objectif: `Le TRI va te dire quelle inflation tu peux supporter chaque année pour que ça soit rentable, donc il faut maximiser le TRI.`
+    }
+};
 
-export function Graph() {
+export function Graph({ data }) {
+    const scenarios = [
+        {
+            name: 'Puissance maximale',
+            puissance: data.scenarios.puissance_max,
+            percentage: 100, // Assuming it's always 100% for the max puissance
+            indicateurs: []
+        },
+        {
+            name: 'Amortissement le plus rapide',
+            puissance: data.scenarios.amortissement_rapide,
+            percentage: 100, // Example percentage
+            indicateurs: []
+        },
+        {
+            name: '100% autoconsommation',
+            puissance: data.scenarios.autoconso_100 || 0, // Handle undefined
+            percentage: 100, // Example percentage
+            indicateurs: []
+        },
+        {
+            name: 'BEPOS',
+            puissance: data.scenarios.bepos || 0, // Handle undefined
+            percentage: 100, // Example percentage
+            indicateurs: []
+        },
+        {
+            name: 'Bénéfices les plus importants',
+            puissance: data.scenarios.benefices_max,
+            percentage: 100, // Example percentage
+            indicateurs: []
+        },
+        {
+            name: 'Le plus rentable',
+            puissance: data.scenarios.rentable,
+            percentage: 100, // Example percentage
+            indicateurs: []
+        }
+    ];
+
     const [highlightedPuissance, setHighlightedPuissance] = useState(scenarios[0].puissance);
     const [scenarioIndex, setScenarioIndex] = useState(0);
     const [coordScenario, setCoordScenario] = useState({ x: null, y: null });
@@ -242,14 +138,12 @@ export function Graph() {
     const CustomizedLabel = (props) => {
         const { x, y, value } = props;
         if (value === highlightedPuissance) {
-
-            console.log(x, y);
-
             coordRef.current = { x, y };
         }
         return null;
     };
 
+    const highlightedData = data.points_simu.find(point => point.puissance === highlightedPuissance);
 
     return (
         <div className='w-screen flex flex-col items-center justify-center p-8'>
@@ -267,14 +161,12 @@ export function Graph() {
                 ))}
             </div>
 
-
             <div className='w-full h-full border border-t-transparent grid grid-cols-3 justify-center rounded-b-lg'>
                 <div className='m-8 flex flex-col col-span-2'>
                     <div className=' relative z-10 translate-y-1/2 left-4 text-primary text-lg bg-background px-2 w-fit'>
                         Objectif : {scenarios[scenarioIndex].name}
                     </div>
-                    <div className='duration-300 ease-in-out overflow-hidden relative p-4 pt-[1rem] border rounded-lg h-full'> {/* style={{ height: `calc(${contentHeight} + 2rem)` }}> */}
-
+                    <div className='duration-300 ease-in-out overflow-hidden relative p-4 pt-[1rem] border rounded-lg h-full'>
                         <span className='text-secondary-foreground font-secondary' ref={contentRef}>
                             {VULGA[scenarios[scenarioIndex].name].objectif}
                         </span>
@@ -299,20 +191,22 @@ export function Graph() {
                         Indicateurs
                     </div>
                     <div className='flex flex-col gap-4 p-8 pt-12 duration-300 ease-in-out relative border rounded-lg'>
-
-                        {scenarios[scenarioIndex].indicateurs.map((indicateur, index) => (
-                            <span
-                                key={index}
-                                className="font-secondary">
-                                {indicateur.title} {`: `}
-                                <span className='text-secondary'>
-                                    {indicateur.value} {indicateur.unit}
+                        {highlightedData && Object.entries(highlightedData).map(([key, value], index) => {
+                            if (key === 'puissance') return null;
+                            const unit = key === 'bilan_20_ans' ? 'k€' : key === 'tri' ? 'ans' : key === 'autoconso' || key === 'autoprod' ? 'kWh' : '';
+                            const percentage = (value / Math.max(...data.points_simu.map(d => d[key]))) * 100;
+                            return (
+                                <span key={index} className="font-secondary">
+                                    {`${key.charAt(0).toUpperCase() + key.slice(1)}`} {`: `}
+                                    <span className='text-secondary'>
+                                        {value} {unit}
+                                    </span>
+                                    <div className="w-full h-[16px] bg-secondary my-2 rounded-full overflow-hidden">
+                                        <div style={{ width: `${percentage}%` }} className="relative h-full bg-primary duration-700 ease-in-out" />
+                                    </div>
                                 </span>
-                                <div className="w-full h-[16px] bg-secondary my-2 rounded-full overflow-hidden">
-                                    <div style={{ width: `${indicateur.percentage}%` }} className="relative h-full bg-primary duration-700 ease-in-out" />
-                                </div>
-                            </span>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
                 <div className='relative w-full h-full col-span-2'>
@@ -332,9 +226,9 @@ export function Graph() {
                         <ComposedChart
                             width={960}
                             height={350}
+                            data={data.points_simu}
                             margin={{ top: 20, right: 24, left: 20, bottom: 48 }}
                         >
-
                             <defs>
                                 <linearGradient id="colorAc" x1="0" y1="0" x2="0" y2="1">
                                     <stop offset="5%" stopColor="#8884d8" stopOpacity={0.6} />
@@ -351,16 +245,14 @@ export function Graph() {
                             <Line
                                 type="monotone"
                                 dataKey="amortissement"
-                                data={data}
                                 name="Temps d'amortissement"
                                 stroke="#1b0138"
                                 strokeWidth={3}
                                 isAnimationActive={false}>
-
                                 <LabelList dataKey="puissance" content={<CustomizedLabel />} />
                             </Line>
-                            <Area type="bump" dataKey="ac" data={data} name="Auto-consommation" stroke="#8884d8" strokeOpacity={0.5} fillOpacity={0.8} fill="url(#colorAc)" activeDot={{ r: 0 }} />
-                            <Area type="monotone" dataKey="ap" data={data} name="Auto-production" stroke="#82ca9d" strokeOpacity={0.5} fillOpacity={0.8} fill="url(#colorAp)" activeDot={{ r: 0 }} />
+                            <Area type="bump" dataKey="autoconso" name="Auto-consommation" stroke="#8884d8" strokeOpacity={0.5} fillOpacity={0.8} fill="url(#colorAc)" activeDot={{ r: 0 }} />
+                            <Area type="monotone" dataKey="autoprod" name="Auto-production" stroke="#82ca9d" strokeOpacity={0.5} fillOpacity={0.8} fill="url(#colorAp)" activeDot={{ r: 0 }} />
                             <Legend align="center" verticalAlign='top' layout='horizontal' wrapperStyle={{ paddingLeft: "12px", }} />
                             <Tooltip content={<CustomTooltip />} cursor={false} />
                         </ComposedChart>
