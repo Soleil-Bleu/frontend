@@ -1,6 +1,7 @@
 import { Line, CartesianGrid, XAxis, YAxis, Tooltip, Area, Legend, ComposedChart, ResponsiveContainer, LabelList } from 'recharts';
 import React, { useState, useRef, useEffect } from 'react';
 import { Ring } from '@/components/ring';
+import { Cross, Landmark, Leaf, Lightbulb, OctagonX } from 'lucide-react';
 
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -16,27 +17,41 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const VULGA = {
     'Puissance max.': {
-        objectif: `Ce scénario maximise la puissance installable sur votre surface disponible, garantissant ainsi une production d'électricité solaire optimale. En installant la puissance maximale, vous pouvez potentiellement produire une grande quantité d'électricité, ce qui peut significativement réduire vos factures énergétiques et augmenter vos revenus si vous revendez l'excédent. Sur le plan environnemental, cela permet de maximiser la contribution à la réduction des émissions de CO2 en utilisant une énergie renouvelable.`
+        description: `Ce scénario maximise la puissance installable sur votre surface disponible, garantissant ainsi une production d'électricité solaire optimale.`,
+        financier: `En installant la puissance maximale, vous pouvez potentiellement produire une grande quantité d'électricité, ce qui peut significativement réduire vos factures énergétiques et augmenter vos revenus si vous revendez l'excédent.`,
+        environnement: `Cela permet de maximiser la contribution à la réduction des émissions de CO2 en utilisant une énergie renouvelable.`
     },
     'Amortissement rapide': {
-        objectif: `Ce scénario vous indique la puissance à installer pour obtenir le temps d'amortissement le plus court. Cela signifie que votre investissement initial sera récupéré plus rapidement grâce aux économies sur les factures d'électricité et aux gains de la revente de l'électricité produite. Par exemple, avec un amortissement rapide, vous pourriez récupérer votre investissement en seulement quelques années, ce qui minimise les risques financiers et maximise les bénéfices à long terme. En termes environnementaux, une récupération rapide de l'investissement permet une transition plus rapide vers une énergie durable.`
+        description: `Ce scénario vous indique la puissance à installer pour obtenir le temps d'amortissement le plus court.`,
+        financier: `Cela signifie que votre investissement initial sera récupéré plus rapidement grâce aux économies sur les factures d'électricité et aux gains de la revente de l'électricité produite. Par exemple, avec un amortissement rapide, vous pourriez récupérer votre investissement en seulement quelques années, ce qui minimise les risques financiers et maximise les bénéfices à long terme.`,
+        environnement: `Une récupération rapide de l'investissement permet une transition plus rapide vers une énergie durable.`
     },
     'Autoconsommation totale': {
-        objectif: `Ce scénario vous montre la puissance maximale que vous pouvez installer tout en consommant 100% de l'électricité produite. Cela assure une indépendance énergétique totale, réduisant votre dépendance aux fournisseurs d'électricité et stabilisant vos coûts énergétiques. Financièrement, cela signifie que vous ne payez plus pour l'électricité consommée, ce qui peut représenter des économies substantielles. Environnementalement, consommer toute l'énergie que vous produisez réduit les pertes de transmission et utilise efficacement l'énergie solaire.`
+        description: `Ce scénario vous montre la puissance maximale que vous pouvez installer tout en consommant 100% de l'électricité produite.`,
+        financier: `Cela assure une indépendance énergétique totale, réduisant votre dépendance aux fournisseurs d'électricité et stabilisant vos coûts énergétiques. Financièrement, cela signifie que vous ne payez plus pour l'électricité consommée, ce qui peut représenter des économies substantielles.`,
+        environnement: `Consommer toute l'énergie que vous produisez réduit les pertes de transmission et utilise efficacement l'énergie solaire.`
     },
     'BEPOS': {
-        objectif: `Ce scénario détermine la puissance minimale à installer pour que votre bâtiment soit à énergie positive (BEPOS). Un bâtiment à énergie positive produit plus d'énergie qu'il n'en consomme, ce qui peut non seulement réduire vos factures d'électricité à zéro, mais aussi vous permettre de revendre l'excédent d'énergie. Cela représente un avantage financier significatif à long terme. Environnementalement, cela signifie que votre bâtiment contribue activement à la réduction des émissions de CO2 et peut servir d'exemple de durabilité énergétique.`
+        description: `Ce scénario détermine la puissance minimale à installer pour que votre bâtiment soit à énergie positive (BEPOS).`,
+        financier: `Un bâtiment à énergie positive produit plus d'énergie qu'il n'en consomme, ce qui peut non seulement réduire vos factures d'électricité à zéro, mais aussi vous permettre de revendre l'excédent d'énergie. Cela représente un avantage financier significatif à long terme.`,
+        environnement: `Cela signifie que votre bâtiment contribue activement à la réduction des émissions de CO2 et peut servir d'exemple de durabilité énergétique.`
     },
     'Bénéfices totaux': {
-        objectif: `Ce scénario vise à maximiser les bénéfices totaux sur une période de 20 ans, correspondant à la durée de votre contrat avec EDF Obligation d'Achat, qui achète l'électricité produite par vos panneaux. En maximisant les bénéfices, vous assurez un retour sur investissement élevé. Cela inclut les économies sur les factures d'électricité et les revenus de la revente d'électricité. Sur le plan environnemental, cette approche encourage la production continue d'énergie renouvelable sur une longue période, réduisant ainsi l'empreinte carbone.`
+        description: `Ce scénario vise à maximiser les bénéfices totaux sur une période de 20 ans, correspondant à la durée de votre contrat avec EDF Obligation d'Achat, qui achète l'électricité produite par vos panneaux.`,
+        financier: `En maximisant les bénéfices, vous assurez un retour sur investissement élevé. Cela inclut les économies sur les factures d'électricité et les revenus de la revente d'électricité.`,
+        environnement: `Cette approche encourage la production continue d'énergie renouvelable sur une longue période, réduisant ainsi l'empreinte carbone.`
     },
     'Sécurité': {
-        objectif: `Ce scénario de sécurité financière, mesuré par le Taux de Rendement Interne (TRI), vous indique le taux d'inflation annuel que votre projet peut supporter sans compromettre l'amortissement de votre investissement. Par exemple, avec un TRI de 5%, votre projet reste rentable même avec une inflation de 5% chaque année pendant 20 ans. Cela offre une assurance financière contre les fluctuations économiques. En termes environnementaux, assurer la viabilité financière de votre projet à long terme signifie une contribution soutenue à la réduction des émissions de gaz à effet de serre.`
+        description: `Ce scénario de sécurité financière, mesuré par le Taux de Rendement Interne (TRI), vous indique le taux d'inflation annuel que votre projet peut supporter sans compromettre l'amortissement de votre investissement.`,
+        financier: `Par exemple, avec un TRI de 5%, votre projet reste rentable même avec une inflation de 5% chaque année pendant 20 ans. Cela offre une assurance financière contre les fluctuations économiques.`,
+        environnement: `Assurer la viabilité financière de votre projet à long terme signifie une contribution soutenue à la réduction des émissions de gaz à effet de serre.`
     }
 };
 
+
+
 const INDICATEURS = [
-    { key: 'amortissement', label: 'Amortissement', unit: 'ans'},
+    { key: 'amortissement', label: 'Amortissement', unit: 'ans' },
     { key: 'bilan_20_ans', label: 'Bilan sur 20 ans', unit: '€' },
     { key: 'tri', label: 'Taux de rendement interne (TRI)', unit: '%' },
     { key: 'autoconso', label: 'Auto-consommation', unit: '%' },
@@ -169,18 +184,30 @@ export function Graph({ data }) {
 
             <div className='w-full h-full border border-t-transparent grid grid-cols-3 justify-center rounded-b-lg'>
                 <div className='m-8 flex flex-col col-span-2'>
-                    <div className=' relative z-10 translate-y-1/2 left-4 text-primary text-lg bg-background px-2 w-fit'>
+                    <div className='relative z-10 translate-y-1/2 left-4 text-primary text-lg bg-background px-2 w-fit'>
                         Objectif : {scenarios[scenarioIndex].name}
                     </div>
-                    <div className='duration-300 ease-in-out overflow-hidden relative p-4 pt-[1rem] border rounded-lg h-full'>
-                        <span className='text-secondary-foreground font-secondary' ref={contentRef}>
-                            {VULGA[scenarios[scenarioIndex].name].objectif}
+                    <div className='duration-300 ease-in-out overflow-hidden relative p-4 pt-6 border rounded-lg h-full'>
+                        <span className='text-secondary-foreground font-secondary flex flex-col gap-2' ref={contentRef}>
+                            <p>
+                                <Lightbulb className='inline-block mr-2 h-4 w-4' />
+                                {VULGA[scenarios[scenarioIndex].name].description}</p>
+                            <p>
+                                <Landmark className='inline-block mr-2 h-4 w-4' />
+                                {VULGA[scenarios[scenarioIndex].name].financier}
+                            </p>
+                            <p>
+                                <Leaf className='inline-block mr-2 h-4 w-4' />
+                                {VULGA[scenarios[scenarioIndex].name].environnement}
+                            </p>
                             {scenarios[scenarioIndex].warning && (
-                                <div className='text-red-500 font-bold py-2'>
+                                <div className='text-red-500 font-bold'>
+                                    <OctagonX className='inline-block mr-2 h-4 w-4' />
                                     {scenarios[scenarioIndex].warning}
                                 </div>
                             )}
                         </span>
+
                     </div>
                 </div>
                 <div className={`m-8 flex flex-col col-span-1 ${scenarios[scenarioIndex].warning ? 'opacity-40' : ''} duration-1000`}>
