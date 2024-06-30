@@ -6,7 +6,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
         return (
             <div className="bg-background p-4 rounded-lg border font-secondary text-primary">
-                <p>{`Puissance : `}<b className='font-semibold'>{label}</b> {`kWh`}</p>
+                <p>{`Puissance : `}<b className='font-semibold'>{label}</b> {`kWc`}</p>
                 <p>{`Amorti en : `}<b className='font-semibold'>{payload[0].value}</b> {`ans`}</p>
             </div>
         );
@@ -16,30 +16,22 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const VULGA = {
     'Puissance max': {
-        objectif: `L'objectif de rendement optimal pour une étude de panneaux solaires vise à maximiser l'efficacité de la conversion 
-        de l'énergie solaire en électricité. Il s'agit d'optimiser l'orientation et l'inclinaison des panneaux pour capter 
-        le maximum de rayonnement solaire tout au long de l'année.`
+        objectif: `La puissance maximale qui peut-être installé avec votre surface`
     },
     'Amortissement rapide': {
-        objectif: `Pour l'amortissement, l'objectif est de réduire le temps nécessaire pour que l'investissement initial dans les 
-        panneaux solaires soit compensé par les économies réalisées sur les factures d'électricité. Cela implique une 
-        analyse détaillée des coûts, des subventions disponibles, et de l'efficacité énergétique pour assurer une 
-        rentabilité maximale du projet à moyen et long terme.`
+        objectif: `Voici la puissance qu'il faut que vous installiez pour un ammortissement le plus court, c'est à dire le temps nécessaire pour que l'investissement initial soit compensé par les économies réalisées sur les factures d'électricité et les gains éventuels de la revente d'éléctricité. Attention nous calculons un ammortissement brut, donc avec une inflation à 0%.`
     },
     'Autoconsommation totale': {
-        objectif: `C’est quand tu consomme tout ce que tes panneaux produisent. Du coup faut chercher la puissance maximale qui te permet d’avoir 100% d’AC (il faut la puissance max pour taux_AC > 99%).`
+        objectif: `Voici la puissance maximale que vous pouvez installer en consommant 100% de l'électricité produite.`
     },
     'BEPOS': {
-        objectif: `Concernant l'indépendance énergétique, l'ambition est de minimiser la dépendance aux réseaux 
-        énergétiques traditionnels en favorisant l'autoproduction et l'autoconsommation d'électricité solaire. 
-        Cela passe par une conception systémique incluant le stockage de l'énergie et la gestion intelligente de la 
-        production et de la consommation, visant une autonomie énergétique maximale et un impact environnemental réduit.`
+        objectif: `Voici la puissance minimale à installer pour que votre batiment soit BEPOS (bâtiment à énergie positive). Attention si vous consommez une autre énergie que de l'électricité (bois, gaz ...), cela ne fonctionne pas.  `
     },
     'Bénéfices totaux': {
-        objectif: `Il s'agit de maximiser les bénéfices totaux sur une période de 20 ans.`
+        objectif: `Il s'agit de maximiser les bénéfices totaux sur une période de 20 ans. La durée de votre contrat avec EDF O.A qui vous achète l'éléctricité.`
     },
     'Sécurité': {
-        objectif: `Le TRI va te dire quelle inflation tu peux supporter chaque année pour que ça soit rentable, donc il faut maximiser le TRI.`
+        objectif: `Le TRI permet de savoir quelle inflation votre projet peux supporter chaque année. Par exemple avec un TRI de 5%, s'il y a une inflattion de 5% chaque année pendant 20ans, vous aurez tout de même ammorti votre investissement.`
     }
 };
 
@@ -204,7 +196,7 @@ export function Graph({ data }) {
                     <div className={`flex flex-col gap-4 p-8 pt-12 duration-300 ease-in-out relative border rounded-lg ${scenarios[scenarioIndex].warning ? 'text-gray-400' : ''}`}>
                         {highlightedData && Object.entries(highlightedData).map(([key, value], index) => {
                             if (key === 'puissance') return null;
-                            const unit = key === 'bilan_20_ans' ? 'k€' : key === 'tri' ? 'ans' : key === 'autoconso' || key === 'autoprod' ? 'kWh' : '';
+                            const unit = key === 'bilan_20_ans' ? '€' : key === 'tri' ? '%' : key === 'autoconso' || key === 'autoprod' ? '%' : '';
                             const percentage = (value / Math.max(...data.points_simu.map(d => d[key]))) * 100;
                             return (
                                 <span key={index} className="font-secondary">
@@ -250,7 +242,7 @@ export function Graph({ data }) {
                                     <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
                                 </linearGradient>
                             </defs>
-                            <XAxis dataKey="puissance" label={{ value: 'Puissance (kWh)', position: 'bottom', offset: 8 }} allowDuplicatedCategory={false} />
+                            <XAxis dataKey="puissance" label={{ value: 'Puissance (kWc)', position: 'bottom', offset: 8 }} allowDuplicatedCategory={false} />
                             <YAxis label={{ value: `Temps d'amort. (années)`, position: 'insideLeft', angle: -90, style: { textAnchor: "middle" } }} />
                             <CartesianGrid strokeArray="3 3" strokeOpacity={0.3} />
                             <Line
