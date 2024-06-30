@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -17,9 +16,9 @@ import {
 } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Slider } from "@/components/ui/slider"
 import { Button } from "@/components/ui/button"
 import { Home, ParkingSquare, Zap } from 'lucide-react';
+import CompassSelect from '@/components/compassSelect';
 
 export function FormPage() {
   const [formData, setFormData] = useState({
@@ -28,6 +27,8 @@ export function FormPage() {
     type_installation: '',
     localisation: '',
     surface: '',
+    orientation: '',
+    inclinaison: '',
     file: null,
     montant_pret: '',
     taux_pret: '',
@@ -58,10 +59,11 @@ export function FormPage() {
     }));
   };
 
-  const handleSelectChange = (value) => {
+
+  const handleSelectChange = (name, value) => {
     setFormData((prevData) => ({
       ...prevData,
-      type_installation: value,
+      [name]: value,
     }));
   };
 
@@ -71,6 +73,8 @@ export function FormPage() {
     if (!formData.type_installation) newErrors.type_installation = "Le type d'installation est requis.";
     if (!formData.localisation) newErrors.localisation = 'Le code postal est requis.';
     if (!formData.surface) newErrors.surface = 'La surface max est requise.';
+    if (!formData.orientation) newErrors.orientation = 'L\'orientation est requise.';
+    if (!formData.inclinaison) newErrors.inclinaison = 'L\'inclinaison est requise.';
     if (!formData.file) newErrors.file = 'Le fichier est requis.';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -86,6 +90,8 @@ export function FormPage() {
     formDataObj.append('type_centrale', formData.type_installation);
     formDataObj.append('localisation', formData.localisation);
     formDataObj.append('surface', formData.surface);
+    formDataObj.append('orientation', formData.orientation);
+    formDataObj.append('inclinaison', formData.inclinaison);
     formDataObj.append('file', formData.file);
     formDataObj.append('montant_pret', formData.montant_pret || 0);
     formDataObj.append('taux_pret', formData.taux_pret || 0);
@@ -116,7 +122,7 @@ export function FormPage() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className='grid pt-4 grid-cols-2 w-full items-center gap-14'>
-              
+
               <div className="grid w-full max-w-sm items-center gap-2">
                 <Label htmlFor="prix_achat">Prix auquel vous achetez l'électricité :</Label>
                 <div className='flex flex-row items-center space-x-2 space-y-0'>
@@ -134,7 +140,7 @@ export function FormPage() {
               </div>
               <div className="grid w-3/4 max-w-sm items-center gap-2">
                 <Label htmlFor="type_installation">Type d'installation :</Label>
-                <Select onValueChange={handleSelectChange}>
+                <Select onValueChange={(value) => handleSelectChange('type_installation', value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Sélectionnez votre projet" />
                   </SelectTrigger>
@@ -183,9 +189,32 @@ export function FormPage() {
                     value={formData.surface}
                     onChange={handleChange}
                     placeholder="35" />
-                    <Label htmlFor="surface">m²</Label>
+                  <Label htmlFor="surface">m²</Label>
                 </div>
                 {errors.surface && <span className="text-red-500">{errors.surface}</span>}
+              </div>
+              <div className="grid w-3/4 max-w-sm items-center gap-2">
+                <Label htmlFor="orientation">Orientation de la surface :</Label>
+                <CompassSelect
+                  selectedOrientation={formData.orientation}
+                  onSelect={(value) => handleSelectChange('orientation', value)}
+                />
+                {errors.orientation && <span className="text-red-500">{errors.orientation}</span>}
+              </div>
+              <div className="grid w-full max-w-sm items-center gap-2">
+                <Label htmlFor="inclinaison">Inclinaison de la surface</Label>
+                <div className='flex flex-row items-center space-x-2 space-y-0'>
+                  <Input
+                    className="text-right w-3/4 [&::-webkit-inner-spin-button]:appearance-none"
+                    name="inclinaison"
+                    id="inclinaison"
+                    type="number"
+                    value={formData.inclinaison}
+                    onChange={handleChange}
+                    placeholder="25" />
+                  <Label htmlFor="inclinaison">°</Label>
+                </div>
+                {errors.inclinaison && <span className="text-red-500">{errors.inclinaison}</span>}
               </div>
               <div className="flex flex-col col-span-2 gap-4">
                 <div className='flex flex-row gap-2 items-center'>

@@ -15,25 +15,33 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const VULGA = {
-    'Puissance max': {
-        objectif: `La puissance maximale qui peut-être installé avec votre surface`
+    'Puissance max.': {
+        objectif: `Ce scénario maximise la puissance installable sur votre surface disponible, garantissant ainsi une production d'électricité solaire optimale. En installant la puissance maximale, vous pouvez potentiellement produire une grande quantité d'électricité, ce qui peut significativement réduire vos factures énergétiques et augmenter vos revenus si vous revendez l'excédent. Sur le plan environnemental, cela permet de maximiser la contribution à la réduction des émissions de CO2 en utilisant une énergie renouvelable.`
     },
     'Amortissement rapide': {
-        objectif: `Voici la puissance qu'il faut que vous installiez pour un ammortissement le plus court, c'est à dire le temps nécessaire pour que l'investissement initial soit compensé par les économies réalisées sur les factures d'électricité et les gains éventuels de la revente d'éléctricité. Attention nous calculons un ammortissement brut, donc avec une inflation à 0%.`
+        objectif: `Ce scénario vous indique la puissance à installer pour obtenir le temps d'amortissement le plus court. Cela signifie que votre investissement initial sera récupéré plus rapidement grâce aux économies sur les factures d'électricité et aux gains de la revente de l'électricité produite. Par exemple, avec un amortissement rapide, vous pourriez récupérer votre investissement en seulement quelques années, ce qui minimise les risques financiers et maximise les bénéfices à long terme. En termes environnementaux, une récupération rapide de l'investissement permet une transition plus rapide vers une énergie durable.`
     },
     'Autoconsommation totale': {
-        objectif: `Voici la puissance maximale que vous pouvez installer en consommant 100% de l'électricité produite.`
+        objectif: `Ce scénario vous montre la puissance maximale que vous pouvez installer tout en consommant 100% de l'électricité produite. Cela assure une indépendance énergétique totale, réduisant votre dépendance aux fournisseurs d'électricité et stabilisant vos coûts énergétiques. Financièrement, cela signifie que vous ne payez plus pour l'électricité consommée, ce qui peut représenter des économies substantielles. Environnementalement, consommer toute l'énergie que vous produisez réduit les pertes de transmission et utilise efficacement l'énergie solaire.`
     },
     'BEPOS': {
-        objectif: `Voici la puissance minimale à installer pour que votre batiment soit BEPOS (bâtiment à énergie positive). Attention si vous consommez une autre énergie que de l'électricité (bois, gaz ...), cela ne fonctionne pas.  `
+        objectif: `Ce scénario détermine la puissance minimale à installer pour que votre bâtiment soit à énergie positive (BEPOS). Un bâtiment à énergie positive produit plus d'énergie qu'il n'en consomme, ce qui peut non seulement réduire vos factures d'électricité à zéro, mais aussi vous permettre de revendre l'excédent d'énergie. Cela représente un avantage financier significatif à long terme. Environnementalement, cela signifie que votre bâtiment contribue activement à la réduction des émissions de CO2 et peut servir d'exemple de durabilité énergétique.`
     },
     'Bénéfices totaux': {
-        objectif: `Il s'agit de maximiser les bénéfices totaux sur une période de 20 ans. La durée de votre contrat avec EDF O.A qui vous achète l'éléctricité.`
+        objectif: `Ce scénario vise à maximiser les bénéfices totaux sur une période de 20 ans, correspondant à la durée de votre contrat avec EDF Obligation d'Achat, qui achète l'électricité produite par vos panneaux. En maximisant les bénéfices, vous assurez un retour sur investissement élevé. Cela inclut les économies sur les factures d'électricité et les revenus de la revente d'électricité. Sur le plan environnemental, cette approche encourage la production continue d'énergie renouvelable sur une longue période, réduisant ainsi l'empreinte carbone.`
     },
     'Sécurité': {
-        objectif: `Le TRI permet de savoir quelle inflation votre projet peux supporter chaque année. Par exemple avec un TRI de 5%, s'il y a une inflattion de 5% chaque année pendant 20ans, vous aurez tout de même ammorti votre investissement.`
+        objectif: `Ce scénario de sécurité financière, mesuré par le Taux de Rendement Interne (TRI), vous indique le taux d'inflation annuel que votre projet peut supporter sans compromettre l'amortissement de votre investissement. Par exemple, avec un TRI de 5%, votre projet reste rentable même avec une inflation de 5% chaque année pendant 20 ans. Cela offre une assurance financière contre les fluctuations économiques. En termes environnementaux, assurer la viabilité financière de votre projet à long terme signifie une contribution soutenue à la réduction des émissions de gaz à effet de serre.`
     }
 };
+
+const INDICATEURS = [
+    { key: 'amortissement', label: 'Amortissement', unit: 'ans'},
+    { key: 'bilan_20_ans', label: 'Bilan sur 20 ans', unit: '€' },
+    { key: 'tri', label: 'Taux de rendement interne (TRI)', unit: '%' },
+    { key: 'autoconso', label: 'Auto-consommation', unit: '%' },
+    { key: 'autoprod', label: 'Auto-production', unit: '%' }
+];
 
 export function Graph({ data }) {
     const maxPuissance = data.scenarios.puissance_max;
@@ -42,7 +50,7 @@ export function Graph({ data }) {
 
     const scenarios = [
         {
-            name: 'Puissance max',
+            name: 'Puissance max.',
             puissance: data.scenarios.puissance_max,
             percentage: maxPercent,
             indicateurs: []
@@ -175,11 +183,11 @@ export function Graph({ data }) {
                         </span>
                     </div>
                 </div>
-                <div className='m-8 flex flex-col col-span-1'>
+                <div className={`m-8 flex flex-col col-span-1 ${scenarios[scenarioIndex].warning ? 'opacity-40' : ''} duration-1000`}>
                     <div className=' relative z-10 translate-y-1/2 left-4 text-primary text-lg bg-background px-2 w-fit'>
                         Puissance à installer
                     </div>
-                    <div className={`duration-300 ease-in-out h-full relative p-6 border rounded-lg flex flex-col items-center justify-center ${scenarios[scenarioIndex].warning ? 'text-gray-400' : ''}`}>
+                    <div className={`duration-300 ease-in-out h-full relative p-6 border rounded-lg flex flex-col items-center justify-center`}>
                         <Ring progress={scenarios[scenarioIndex].percentage} />
                         <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center'>
                             <span className='text-secondary-foreground font-secondary text-5xl tracking-tight'>
@@ -189,18 +197,18 @@ export function Graph({ data }) {
                         </div>
                     </div>
                 </div>
-                <div className='m-8 flex flex-col col-span-1'>
-                    <div className=' relative z-10 translate-y-1/2 left-4 text-primary text-lg bg-background px-2 w-fit'>
+                <div className={`m-8 flex flex-col col-span-1 ${scenarios[scenarioIndex].warning ? 'opacity-40' : ''} duration-1000`}>
+                    <div className={`relative z-10 translate-y-1/2 left-4 text-primary text-lg bg-background px-2 w-fit`}>
                         Indicateurs
                     </div>
                     <div className={`flex flex-col gap-4 p-8 pt-12 duration-300 ease-in-out relative border rounded-lg ${scenarios[scenarioIndex].warning ? 'text-gray-400' : ''}`}>
-                        {highlightedData && Object.entries(highlightedData).map(([key, value], index) => {
-                            if (key === 'puissance') return null;
-                            const unit = key === 'bilan_20_ans' ? '€' : key === 'tri' ? '%' : key === 'autoconso' || key === 'autoprod' ? '%' : '';
+                        {highlightedData && INDICATEURS.map(({ key, label, unit }, index) => {
+                            const value = highlightedData[key];
+                            if (value === undefined) return null;
                             const percentage = (value / Math.max(...data.points_simu.map(d => d[key]))) * 100;
                             return (
                                 <span key={index} className="font-secondary">
-                                    {`${key.charAt(0).toUpperCase() + key.slice(1)}`} {`: `}
+                                    {`${label}`} {`: `}
                                     <span className='text-secondary'>
                                         {value} {unit}
                                     </span>
@@ -212,12 +220,11 @@ export function Graph({ data }) {
                         })}
                     </div>
                 </div>
-                <div className='relative w-full h-full col-span-2'>
+                <div className={`relative w-full h-full col-span-2 ${scenarios[scenarioIndex].warning ? 'opacity-40' : ''} duration-1000`}>
                     <div
                         style={{
                             left: `${coordScenario.x}px`,
                             top: `${coordScenario.y}px`,
-                            width: `180px`,
                             transform: 'translate(-50%, -150%)'
                         }}
                         className="absolute z-10 transition-all duration-300 ease-in-out font-secondary text-xl text-center p-2 px-4 border border-secondary rounded-lg bg-background shadow-lg"
@@ -242,22 +249,24 @@ export function Graph({ data }) {
                                     <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
                                 </linearGradient>
                             </defs>
-                            <XAxis dataKey="puissance" label={{ value: 'Puissance (kWc)', position: 'bottom', offset: 8 }} allowDuplicatedCategory={false} />
-                            <YAxis label={{ value: `Temps d'amort. (années)`, position: 'insideLeft', angle: -90, style: { textAnchor: "middle" } }} />
+                            <XAxis dataKey="puissance" label={{ value: 'Puissance (kWc)', position: 'bottom', offset: 8 }} />
+                            <YAxis yAxisId="left" label={{ value: `Temps d'amort. (années)`, position: 'insideLeft', angle: -90, style: { textAnchor: "middle" } }} />
+                            <YAxis yAxisId="right" orientation="right" label={{ value: 'Taux (%)', position: 'insideRight', angle: -90, style: { textAnchor: "middle" } }} domain={[0, 100]} />
                             <CartesianGrid strokeArray="3 3" strokeOpacity={0.3} />
                             <Line
+                                yAxisId="left"
                                 type="monotone"
                                 dataKey="amortissement"
                                 name="Temps d'amortissement"
                                 stroke="#1b0138"
-                                strokeWidth={3}
-                                isAnimationActive={false}>
+                                strokeWidth={4}
+                                isAnimationActive={true}>
                                 <LabelList dataKey="puissance" content={<CustomizedLabel />} />
                             </Line>
-                            <Area type="monotone" dataKey="autoconso" name="Auto-consommation" stroke="#8884d8" strokeOpacity={0.5} fillOpacity={0.8} fill="url(#colorAc)" activeDot={{ r: 0 }} />
-                            <Area type="monotone" dataKey="autoprod" name="Auto-production" stroke="#82ca9d" strokeOpacity={0.5} fillOpacity={0.8} fill="url(#colorAp)" activeDot={{ r: 0 }} />
+                            <Area yAxisId="right" type="monotone" dataKey="autoconso" name="Auto-consommation" stroke="#8884d8" strokeOpacity={0.5} fillOpacity={0.8} fill="url(#colorAc)" activeDot={{ r: 0 }} />
+                            <Area yAxisId="right" type="monotone" dataKey="autoprod" name="Auto-production" stroke="#82ca9d" strokeOpacity={0.5} fillOpacity={0.8} fill="url(#colorAp)" activeDot={{ r: 0 }} />
                             <Legend align="center" verticalAlign='top' layout='horizontal' wrapperStyle={{ paddingLeft: "12px", }} />
-                            <Tooltip content={<CustomTooltip />} cursor={false} />
+                            <Tooltip content={<CustomTooltip />} cursor={true} />
                         </ComposedChart>
                     </ResponsiveContainer>
                 </div>
