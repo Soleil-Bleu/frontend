@@ -26,14 +26,12 @@ export function FormPage() {
     id: '',
     prix_achat: '',
     type_installation: '',
+    localisation: '',
+    surface: '',
+    file: null,
     montant_pret: '',
     taux_pret: '',
     duree_pret: '',
-    devis_installation: 0,
-    localisation: '',
-    annee: 2024,
-    powers: [100, 400],
-    file: null,
   });
 
   const [errors, setErrors] = useState({});
@@ -53,13 +51,6 @@ export function FormPage() {
     }));
   };
 
-  const handleSliderChange = (values) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      powers: values,
-    }));
-  };
-
   const handleFileChange = (e) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -76,11 +67,10 @@ export function FormPage() {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.prix_achat) newErrors.prix_achat = 'Le prix est requis.';
+    if (!formData.prix_achat) newErrors.prix_achat = "Le prix d'achat est requis.";
     if (!formData.type_installation) newErrors.type_installation = "Le type d'installation est requis.";
-    if (!formData.localisation) newErrors.localisation = 'La localisation est requise.';
-    if (!formData.annee) newErrors.annee = "L'année est requise.";
-    if (!formData.powers || formData.powers.length !== 2) newErrors.powers = 'Les puissances sont requises et doivent avoir deux valeurs.';
+    if (!formData.localisation) newErrors.localisation = 'Le code postal est requis.';
+    if (!formData.surface) newErrors.surface = 'La surface max est requise.';
     if (!formData.file) newErrors.file = 'Le fichier est requis.';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -91,16 +81,15 @@ export function FormPage() {
     if (!validateForm()) return;
 
     const formDataObj = new FormData();
-    formDataObj.append('file', formData.file);
     formDataObj.append('id', formData.id);
     formDataObj.append('prix_achat', formData.prix_achat);
     formDataObj.append('type_centrale', formData.type_installation);
-    formDataObj.append('montant_pret', formData.montant_pret || 0); // Provide default value
-    formDataObj.append('taux_pret', formData.taux_pret || 0); // Provide default value
-    formDataObj.append('duree_pret', formData.duree_pret || 0); // Provide default value
     formDataObj.append('localisation', formData.localisation);
-    formDataObj.append('annee', formData.annee);
-    formDataObj.append('puissances', JSON.stringify(formData.powers));
+    formDataObj.append('surface', formData.surface);
+    formDataObj.append('file', formData.file);
+    formDataObj.append('montant_pret', formData.montant_pret || 0);
+    formDataObj.append('taux_pret', formData.taux_pret || 0);
+    formDataObj.append('duree_pret', formData.duree_pret || 0);
 
     console.log('Form Data:', Object.fromEntries(formDataObj.entries()));
 
@@ -127,6 +116,7 @@ export function FormPage() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className='grid pt-4 grid-cols-2 w-full items-center gap-14'>
+              
               <div className="grid w-full max-w-sm items-center gap-2">
                 <Label htmlFor="prix_achat">Prix auquel vous achetez l'électricité :</Label>
                 <div className='flex flex-row items-center space-x-2 space-y-0'>
@@ -167,50 +157,35 @@ export function FormPage() {
               </div>
               <div className="grid w-full max-w-sm items-center gap-2">
                 <div className='flex flex-row gap-2 items-center'>
-                  <Label htmlFor="localisation">Région du projet :</Label>
+                  <Label htmlFor="localisation">Code postal du projet :</Label>
                 </div>
                 <div className='flex w-3/4 flex-row items-center space-x-2 space-y-0'>
                   <Input
                     name="localisation"
                     id="localisation"
-                    type="text"
+                    type="number"
                     value={formData.localisation}
                     onChange={handleChange}
-                    placeholder="Loire Atlantique" />
+                    placeholder="44100" />
                 </div>
                 {errors.localisation && <span className="text-red-500">{errors.localisation}</span>}
               </div>
               <div className="grid w-full max-w-sm items-center gap-2">
                 <div className='flex flex-row gap-2 items-center'>
-                  <Label htmlFor="annee">Année de mise en service :</Label>
+                  <Label htmlFor="surface">Surface max disponible :</Label>
                 </div>
                 <div className='flex w-3/4 flex-row items-center space-x-2 space-y-0'>
                   <Input
-                    name="annee"
-                    id="annee"
+                    className="text-right w-3/4"
+                    name="surface"
+                    id="surface"
                     type="number"
-                    value={formData.annee}
+                    value={formData.surface}
                     onChange={handleChange}
-                    placeholder="2024" />
+                    placeholder="35" />
+                    <Label htmlFor="surface">m²</Label>
                 </div>
-                {errors.annee && <span className="text-red-500">{errors.annee}</span>}
-              </div>
-              <div className="grid col-span-2 w-full items-center gap-6">
-                <div className='flex flex-row gap-2 items-center'>
-                  <Label htmlFor="powers">Gamme de puissance à étudier :</Label>
-                </div>
-                <div className='px-8'>
-                  <Slider
-                    min={0}
-                    max={500}
-                    step={50}
-                    minStepsBetweenThumbs={2}
-                    value={formData.powers}
-                    onValueChange={handleSliderChange}
-                    formatLabel={(value) => `${value} kWh`}
-                  />
-                </div>
-                {errors.powers && <span className="text-red-500">{errors.powers}</span>}
+                {errors.surface && <span className="text-red-500">{errors.surface}</span>}
               </div>
               <div className="flex flex-col col-span-2 gap-4">
                 <div className='flex flex-row gap-2 items-center'>

@@ -15,18 +15,18 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const VULGA = {
-    'Puissance maximale': {
+    'Puissance max': {
         objectif: `L'objectif de rendement optimal pour une étude de panneaux solaires vise à maximiser l'efficacité de la conversion 
         de l'énergie solaire en électricité. Il s'agit d'optimiser l'orientation et l'inclinaison des panneaux pour capter 
         le maximum de rayonnement solaire tout au long de l'année.`
     },
-    'Amortissement le plus rapide': {
+    'Amortissement rapide': {
         objectif: `Pour l'amortissement, l'objectif est de réduire le temps nécessaire pour que l'investissement initial dans les 
         panneaux solaires soit compensé par les économies réalisées sur les factures d'électricité. Cela implique une 
         analyse détaillée des coûts, des subventions disponibles, et de l'efficacité énergétique pour assurer une 
         rentabilité maximale du projet à moyen et long terme.`
     },
-    '100% autoconsommation': {
+    'Autoconsommation totale': {
         objectif: `C’est quand tu consomme tout ce que tes panneaux produisent. Du coup faut chercher la puissance maximale qui te permet d’avoir 100% d’AC (il faut la puissance max pour taux_AC > 99%).`
     },
     'BEPOS': {
@@ -35,50 +35,56 @@ const VULGA = {
         Cela passe par une conception systémique incluant le stockage de l'énergie et la gestion intelligente de la 
         production et de la consommation, visant une autonomie énergétique maximale et un impact environnemental réduit.`
     },
-    'Bénéfices les plus importants': {
+    'Bénéfices totaux': {
         objectif: `Il s'agit de maximiser les bénéfices totaux sur une période de 20 ans.`
     },
-    'Le plus rentable': {
+    'Sécurité': {
         objectif: `Le TRI va te dire quelle inflation tu peux supporter chaque année pour que ça soit rentable, donc il faut maximiser le TRI.`
     }
 };
 
 export function Graph({ data }) {
+    const maxPuissance = data.scenarios.puissance_max;
+    const minPuissance = Math.min(...data.points_simu.map(point => point.puissance));
+    const maxPercent = 96;
+
     const scenarios = [
         {
-            name: 'Puissance maximale',
+            name: 'Puissance max',
             puissance: data.scenarios.puissance_max,
-            percentage: 100, // Assuming it's always 100% for the max puissance
+            percentage: maxPercent,
             indicateurs: []
         },
         {
-            name: 'Amortissement le plus rapide',
+            name: 'Amortissement rapide',
             puissance: data.scenarios.amortissement_rapide,
-            percentage: 100, // Example percentage
+            percentage: (data.scenarios.amortissement_rapide / maxPuissance) * maxPercent,
             indicateurs: []
         },
         {
-            name: '100% autoconsommation',
-            puissance: data.scenarios.autoconso_100 || 0, // Handle undefined
-            percentage: 100, // Example percentage
-            indicateurs: []
+            name: 'Autoconsommation totale',
+            puissance: data.scenarios.autoconso_100 || minPuissance,
+            percentage: data.scenarios.autoconso_100 ? (data.scenarios.autoconso_100 / maxPuissance) * maxPercent : (minPuissance / maxPuissance) * maxPercent,
+            indicateurs: [],
+            warning: data.scenarios.autoconso_100 ? '' : 'Non atteignable dans cette configuration : consommation inadaptée.'
         },
         {
             name: 'BEPOS',
-            puissance: data.scenarios.bepos || 0, // Handle undefined
-            percentage: 100, // Example percentage
-            indicateurs: []
+            puissance: data.scenarios.bepos || maxPuissance,
+            percentage: data.scenarios.bepos ? (data.scenarios.bepos / maxPuissance) * maxPercent : maxPercent,
+            indicateurs: [],
+            warning: data.scenarios.bepos ? '' : 'Non atteignable dans cette configuration : surface insuffisante.'
         },
         {
-            name: 'Bénéfices les plus importants',
+            name: 'Bénéfices totaux',
             puissance: data.scenarios.benefices_max,
-            percentage: 100, // Example percentage
+            percentage: (data.scenarios.benefices_max / maxPuissance) * maxPercent,
             indicateurs: []
         },
         {
-            name: 'Le plus rentable',
+            name: 'Sécurité',
             puissance: data.scenarios.rentable,
-            percentage: 100, // Example percentage
+            percentage: (data.scenarios.rentable / maxPuissance) * maxPercent,
             indicateurs: []
         }
     ];
@@ -146,7 +152,7 @@ export function Graph({ data }) {
     const highlightedData = data.points_simu.find(point => point.puissance === highlightedPuissance);
 
     return (
-        <div className='w-screen flex flex-col items-center justify-center p-8'>
+        <div className='w-full bg-background flex flex-col items-center justify-center p-8'>
             <div className='flex justify-between w-full'>
                 {scenarios.map((scenario, index) => (
                     <button
@@ -169,6 +175,11 @@ export function Graph({ data }) {
                     <div className='duration-300 ease-in-out overflow-hidden relative p-4 pt-[1rem] border rounded-lg h-full'>
                         <span className='text-secondary-foreground font-secondary' ref={contentRef}>
                             {VULGA[scenarios[scenarioIndex].name].objectif}
+                            {scenarios[scenarioIndex].warning && (
+                                <div className='text-red-500 font-bold py-2'>
+                                    {scenarios[scenarioIndex].warning}
+                                </div>
+                            )}
                         </span>
                     </div>
                 </div>
@@ -176,7 +187,7 @@ export function Graph({ data }) {
                     <div className=' relative z-10 translate-y-1/2 left-4 text-primary text-lg bg-background px-2 w-fit'>
                         Puissance à installer
                     </div>
-                    <div className='duration-300 ease-in-out h-full relative p-6 border rounded-lg flex flex-col items-center justify-center'>
+                    <div className={`duration-300 ease-in-out h-full relative p-6 border rounded-lg flex flex-col items-center justify-center ${scenarios[scenarioIndex].warning ? 'text-gray-400' : ''}`}>
                         <Ring progress={scenarios[scenarioIndex].percentage} />
                         <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center'>
                             <span className='text-secondary-foreground font-secondary text-5xl tracking-tight'>
@@ -190,7 +201,7 @@ export function Graph({ data }) {
                     <div className=' relative z-10 translate-y-1/2 left-4 text-primary text-lg bg-background px-2 w-fit'>
                         Indicateurs
                     </div>
-                    <div className='flex flex-col gap-4 p-8 pt-12 duration-300 ease-in-out relative border rounded-lg'>
+                    <div className={`flex flex-col gap-4 p-8 pt-12 duration-300 ease-in-out relative border rounded-lg ${scenarios[scenarioIndex].warning ? 'text-gray-400' : ''}`}>
                         {highlightedData && Object.entries(highlightedData).map(([key, value], index) => {
                             if (key === 'puissance') return null;
                             const unit = key === 'bilan_20_ans' ? 'k€' : key === 'tri' ? 'ans' : key === 'autoconso' || key === 'autoprod' ? 'kWh' : '';
@@ -251,7 +262,7 @@ export function Graph({ data }) {
                                 isAnimationActive={false}>
                                 <LabelList dataKey="puissance" content={<CustomizedLabel />} />
                             </Line>
-                            <Area type="bump" dataKey="autoconso" name="Auto-consommation" stroke="#8884d8" strokeOpacity={0.5} fillOpacity={0.8} fill="url(#colorAc)" activeDot={{ r: 0 }} />
+                            <Area type="monotone" dataKey="autoconso" name="Auto-consommation" stroke="#8884d8" strokeOpacity={0.5} fillOpacity={0.8} fill="url(#colorAc)" activeDot={{ r: 0 }} />
                             <Area type="monotone" dataKey="autoprod" name="Auto-production" stroke="#82ca9d" strokeOpacity={0.5} fillOpacity={0.8} fill="url(#colorAp)" activeDot={{ r: 0 }} />
                             <Legend align="center" verticalAlign='top' layout='horizontal' wrapperStyle={{ paddingLeft: "12px", }} />
                             <Tooltip content={<CustomTooltip />} cursor={false} />
