@@ -2,7 +2,7 @@ import { Zap } from "lucide-react";
 
 export function Third() {
     return (
-        <section className="w-full flex flex-col p-8 py-24 items-center bg-background">
+        <section id="valeurs" className="w-full flex flex-col p-8 py-24 items-center bg-background">
             <div className="grid grid-cols-2 gap-16 items-center">
                 <img
                     src="/solar-panel-installation.jpg"

@@ -3,7 +3,7 @@ import { Plus, Zap } from "lucide-react";
 export function Hero() {
     return (
         <section>
-            <div className="px-4 pt-20 h-[624px] flex flex-col gap-6 text-center bg-[url('/solar-panel.svg')] md:px-12 md:pt-24 lg:pt-32 xl:pt-40]">
+            <div id="accueil" className="px-4 pt-20 h-[624px] flex flex-col gap-6 text-center bg-[url('/solar-panel.svg')] md:px-12 md:pt-24 lg:pt-32 xl:pt-40]">
                 <h1 className="text-3xl p-2 font-bold tracking-tighter sm:text-5xl xl:text-6xl">
                     Votre projet solaire
                     <br />

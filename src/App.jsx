@@ -10,6 +10,7 @@ import { Tarifs } from "@/components/tarifs";
 import { Footer } from "@/components/footer";
 import { Graph } from '@/components/graph';
 import { FormPage } from '@/components/formPage';
+import { PreForm } from '@/components/preForm';
 import ResultPage from '@/components/resultPage';
 
 function App() {
@@ -29,7 +30,8 @@ function App() {
           </>
         } />
         <Route path="/result/:id" element={<ResultPage />} />
-        <Route path="/new" element={<FormPage />} />
+        <Route path="/new" element={<PreForm />} />
+        <Route path="/new/form" element={<FormPage />} />
         <Route path="/result" element={<Graph />} />
       </Routes>
     </Router>

@@ -56,7 +56,7 @@ const TARIFS = [
 
 export function Tarifs() {
     return (
-        <section className="py-16 flex flex-col items-center justify-center text-background bg-secondary-foreground -mt-2">
+        <section id="tarifs" className="py-16 flex flex-col items-center justify-center text-background bg-secondary-foreground -mt-2">
             <h2 className="text-5xl font-bold tracking-tight">
                 Nos Tarifs
             </h2>
