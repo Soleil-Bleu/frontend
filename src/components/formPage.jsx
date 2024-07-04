@@ -14,6 +14,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
@@ -228,9 +236,36 @@ export function FormPage() {
                   onChange={handleFileChange}
                 />
                 {errors.file && <span className="text-red-500">{errors.file}</span>}
-                <Button asChild variant='link' className='w-full text-right m-0 h-2 text-muted-foreground'>
-                  <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Où trouver ce fichier ?</a>
-                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant='link' className='w-full text-right m-0 h-2 text-muted-foreground'>
+                      Où trouver ce fichier ?
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-xl py-8">
+                    <DialogHeader>
+                      <DialogTitle>Trouver ma courbe de consommation</DialogTitle>
+                      <DialogDescription>
+                        Nous avons besoin de votre fichier .csv fourni par Enedis.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className='flex flex-col gap-2 text-justify max-h-64 overflow-y-auto pr-2'>
+                      <p className="font-normal">
+                        Si vous possédez un compteur Linky, rendez-vous sur votre compte client Enedis
+                        (ou créez-le si ce n'est pas déjà fait). Vous pouvez ensuite exporter vos relevé
+                        de consommation depuis l'onglet <code>Suivre mes mesures</code>.
+                      </p>
+                      <img src="/screen_enedis.png" alt="capture d'écran du site Enedis" />
+                      <p className='italic'>
+                        Veillez à bien sélectionner le Type de données <code>Consommation horaire</code> et
+                        une Période couvrant au moins une années complète afin de bénéficier d'une précision maximale.
+                      </p>
+                    </div>
+                    {/*                     <DialogFooter>
+                      <Button type="submit">Save changes</Button>
+                    </DialogFooter> */}
+                  </DialogContent>
+                </Dialog>
               </div>
               <div className='flex flex-col col-span-2 gap-4 bg-secondary/40 p-4 rounded-md'>
                 <div className="flex flex-row items-center gap-2">
