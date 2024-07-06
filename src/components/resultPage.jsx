@@ -38,18 +38,21 @@ const ResultPage = () => {
     pollResults();
   }, [id, status]);
 
-  if (status === 'Processing') {
+  if (status === 'Processing' || status === 'Not found') {
     return (
       <>
-      <div className="z-[-1] fixed inset-0 h-full w-full bg-[radial-gradient(#808387_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_10%,transparent_100%)]" />
-      <div className="flex justify-center flex-col p-16 items-center w-full h-screen">
-        <div className='flex flex-col text-center mb-80 gap-2'>
-          <h1 className='text-3xl font-semibold'>Calcul de la simulation...</h1>
-          <h2 className='text-xl text-muted-foreground text-center'>Veuillez patientez</h2>
-          <LoaderCircle className="mx-auto animate-spin" size={60} />
+        <div className="z-[-1] fixed inset-0 h-full w-full bg-[radial-gradient(#808387_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_10%,transparent_100%)]" />
+        <div className="flex justify-center flex-col p-16 items-center w-full h-screen">
+          <div className='flex flex-col text-center mb-80 gap-2'>
+            <h1 className='text-3xl font-semibold'>
+              {status === 'Processing' ? 'Analyse des résultats...' : 'Calcul des Simulations...'}
+            </h1>
+            <h2 className='text-xl text-muted-foreground text-center'>Veuillez patienter</h2>
+            <LoaderCircle className="mx-auto animate-spin" size={60} />
+          </div>
         </div>
-      </div>
-      </>);
+      </>
+    );
   }
 
   if (error) {

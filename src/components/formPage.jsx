@@ -25,7 +25,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { Home, ParkingSquare, Zap } from 'lucide-react';
+import { Home, ParkingSquare, Zap, LoaderCircle } from 'lucide-react';
 import CompassSelect from '@/components/compassSelect';
 
 export function FormPage() {
@@ -44,6 +44,7 @@ export function FormPage() {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setFormData((prevData) => ({
@@ -92,6 +93,8 @@ export function FormPage() {
     e.preventDefault();
     if (!validateForm()) return;
 
+    setLoading(true);
+
     const formDataObj = new FormData();
     formDataObj.append('id', formData.id);
     formDataObj.append('prix_achat', formData.prix_achat);
@@ -114,6 +117,7 @@ export function FormPage() {
       if (error.response && error.response.data.detail) {
         setErrors(error.response.data.detail);
       }
+      setLoading(false);
     }
   };
 
@@ -324,8 +328,14 @@ export function FormPage() {
                 type="submit"
                 className="col-span-2 font-semibold px-6 py-4 rounded-sm flex flex-row items-center justify-center group bg-primary stroke-ring hover:bg-accent-foreground"
               >
-                <Zap className="mr-2 h-4 w-4 text-primary-foreground group-hover:rotate-180 ease-in-out duration-500" />
-                <span className="text-primary-foreground">Lancer la Simulation</span>
+                {loading ? (
+                  <LoaderCircle className="h-6 w-6 text-primary-foreground animate-spin" />
+                ) : (
+                  <>
+                    <Zap className="mr-2 h-4 w-4 text-primary-foreground group-hover:rotate-180 ease-in-out duration-500" />
+                    <span className="text-primary-foreground">Lancer la Simulation</span>
+                  </>
+                )}
               </button>
             </form>
           </CardContent>
