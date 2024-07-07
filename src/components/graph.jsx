@@ -17,28 +17,28 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const VULGA = {
     'Puissance max.': {
-        description: `Ce scénario maximise la puissance installable sur votre surface disponible, garantissant ainsi une production d'électricité solaire optimale.`,
+        description: `Ce scénario maximise la puissance installable sur votre surface disponible, garantissant ainsi une production d'électricité solaire maximale.`,
         financier: `En installant la puissance maximale, vous pouvez potentiellement produire une grande quantité d'électricité, ce qui peut significativement réduire vos factures énergétiques et augmenter vos revenus si vous revendez l'excédent.`,
         environnement: `Cela permet de maximiser la contribution à la réduction des émissions de CO2 en utilisant une énergie renouvelable.`
     },
     'Amortissement rapide': {
         description: `Ce scénario vous indique la puissance à installer pour obtenir le temps d'amortissement le plus court.`,
-        financier: `Cela signifie que votre investissement initial sera récupéré plus rapidement grâce aux économies sur les factures d'électricité et aux gains de la revente de l'électricité produite. Par exemple, avec un amortissement rapide, vous pourriez récupérer votre investissement en seulement quelques années, ce qui minimise les risques financiers et maximise les bénéfices à long terme.`,
-        environnement: `Une récupération rapide de l'investissement permet une transition plus rapide vers une énergie durable.`
+        financier: `Votre investissement initial sera récupéré plus rapidement grâce aux économies sur les factures d'électricité et aux gains de la revente de l'électricité produite. L'ammortissement moyen se situe entre 10 et 12ans chez les particuliers. Vous êtes en dessous ? Foncez ! Au dessus, réflechissez bien avant d'investir ! Gardez à l'esprit que les contrats de revente d'électricité sont de 20 ans.  `,
+        environnement: `Une récupération rapide de l'investissement permet de réinvestir au plus vite dans d'autres projets d'énergies renouvelables .`
     },
     'Autoconsommation totale': {
         description: `Ce scénario vous montre la puissance maximale que vous pouvez installer tout en consommant 100% de l'électricité produite.`,
-        financier: `Cela assure une indépendance énergétique totale, réduisant votre dépendance aux fournisseurs d'électricité et stabilisant vos coûts énergétiques. Financièrement, cela signifie que vous ne payez plus pour l'électricité consommée, ce qui peut représenter des économies substantielles.`,
-        environnement: `Consommer toute l'énergie que vous produisez réduit les pertes de transmission et utilise efficacement l'énergie solaire.`
+        financier: `Tout ce que vous produisez est consommé immédiatement, vous ne serez pas obligé de vous raccorder au réseau ENEDIS pour revendre l'éléctricité. Généralement cela permet de couvrir 10 à 15% des besoins (taux d'autoproduction) réduisant votre dépendance aux fournisseurs d'électricité. Vous êtes à moins de 10% d'autoproduction avec ce scénario, ce n'est peut être pas la bonne option. Vous êtes à plus de 15% ? C'est sûrement une option intéressante en terme de rentabilité.`,
+        environnement: `Consommer l'énergie que vous produisez réduit les pertes de transport et favorise l'indépendance énergétique.`
     },
     'BEPOS': {
         description: `Ce scénario détermine la puissance minimale à installer pour que votre bâtiment soit à énergie positive (BEPOS).`,
-        financier: `Un bâtiment à énergie positive produit plus d'énergie qu'il n'en consomme, ce qui peut non seulement réduire vos factures d'électricité à zéro, mais aussi vous permettre de revendre l'excédent d'énergie. Cela représente un avantage financier significatif à long terme.`,
-        environnement: `Cela signifie que votre bâtiment contribue activement à la réduction des émissions de CO2 et peut servir d'exemple de durabilité énergétique.`
+        financier: `Un bâtiment à énergie positive produit plus d'énergie qu'il n'en consomme en une année. Attention si vous utilisez une autre source d'énergie (bois, gaz etc.), cela ne fonctionne pas !`,
+        environnement: `Votre bâtiment contribue activement à la réduction des émissions de CO2 et participe à l'indépendance énergétique.`
     },
     'Bénéfices totaux': {
         description: `Ce scénario vise à maximiser les bénéfices totaux sur une période de 20 ans, correspondant à la durée de votre contrat avec EDF Obligation d'Achat, qui achète l'électricité produite par vos panneaux.`,
-        financier: `En maximisant les bénéfices, vous assurez un retour sur investissement élevé. Cela inclut les économies sur les factures d'électricité et les revenus de la revente d'électricité.`,
+        financier: `En maximisant les bénéfices, vous assurez un retour sur investissement élevé. Cela inclut les économies sur les factures d'électricité et les revenus de la revente d'électricité. Priviligiez cette option si vous souhaitez investir`,
         environnement: `Cette approche encourage la production continue d'énergie renouvelable sur une longue période, réduisant ainsi l'empreinte carbone.`
     },
     'Sécurité': {
