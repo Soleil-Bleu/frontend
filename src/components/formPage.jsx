@@ -28,6 +28,8 @@ import { Button } from "@/components/ui/button"
 import { Home, ParkingSquare, Zap, LoaderCircle } from 'lucide-react';
 import CompassSelect from '@/components/compassSelect';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export function FormPage() {
   const [formData, setFormData] = useState({
     id: '',
@@ -111,7 +113,7 @@ export function FormPage() {
     console.log('Form Data:', Object.fromEntries(formDataObj.entries()));
 
     try {
-      const response = await axios.post('http://localhost:8000/calc_simulation', formDataObj);
+      const response = await axios.post(`${API_URL}/calc_simulation`, formDataObj);
       window.location.href = `/result/${formData.id}`;
     } catch (error) {
       if (error.response && error.response.data.detail) {

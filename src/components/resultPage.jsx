@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import { Graph } from '@/components/graph';
 import { LoaderCircle } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const ResultPage = () => {
   const { id } = useParams();
   const [results, setResults] = useState(null);
@@ -13,7 +15,7 @@ const ResultPage = () => {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/simulation_result/${id}`);
+        const response = await axios.get(`${API_URL}/simulation_result/${id}`);
         const data = response.data;
         console.log('API Response:', data); // Log the API response
         setStatus(data.status);
