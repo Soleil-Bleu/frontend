@@ -331,7 +331,10 @@ export function FormPage() {
                 className="col-span-2 font-semibold px-6 py-4 rounded-sm flex flex-row items-center justify-center group bg-primary stroke-ring hover:bg-accent-foreground"
               >
                 {loading ? (
-                  <LoaderCircle className="h-6 w-6 text-primary-foreground animate-spin" />
+                  <>
+                    <LoaderCircle className="mr-2 h-6 w-6 text-primary-foreground animate-spin" />
+                    <span className="text-primary-foreground">Simulations en cours...</span>
+                  </>
                 ) : (
                   <>
                     <Zap className="mr-2 h-4 w-4 text-primary-foreground group-hover:rotate-180 ease-in-out duration-500" />
