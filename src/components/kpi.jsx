@@ -6,7 +6,7 @@ export function Kpi() {
                     78 études
                 </h3>
                 <span className="font-secondary">
-                    réalisées en 2024, dont 6 projets d'écoquartier
+                    réalisées en 2024
                 </span>
             </div>
             <div className="border-t-[2px] border-background">

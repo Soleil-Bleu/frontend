@@ -9,9 +9,9 @@ export function Second() {
                         Optimisez les coûts de votre installation
                     </span>
                     <span className="font-secondary">
-                        Grâce à notre analyse, déterminez avec certitudes les paramètres
-                        idéaux de vos panneaux photovoltaïques. Trouvez le juste compromis
-                        qui répond à vos besoins énergétiques sans menacer votre budget.
+                        Grâce à notre analyse, déterminez précisément les paramètres de votre installation.
+                        Trouvez le juste compromis qui répond à vos besoins énergétiques sans menacer votre budget.
+
                     </span>
                     <ul className="font-secondary font-semibold flex flex-col gap-2">
                         <li className="flex flex-row items-center">

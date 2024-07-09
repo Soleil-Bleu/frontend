@@ -12,28 +12,28 @@ const IconStyle = "mr-2 h-4 w-4 text-secondary-foreground group-hover:rotate-180
 const TARIFS = [
     {
         title: "Aurore",
-        description: "Conseillé aux particuliers",
+        description: "Conseillé pour affiner le dimmensionnement d'un projet",
         do: [
             "Analyse de votre profil de consommation",
             "Simulations selon différents scénarios de puissance",
             "Projections financières sur la durée de vie du projet",
-            "Résultats en 1 à 2 semaines"
+            "Export des synthèses en PDF",
         ],
-        price: "45 €",
+        price: "X €",
         item: "l'étude",
         icon: <Zap className={IconStyle}/>,
         cta: "Analyser mon projet"
     }, {
         title: "Zénith",
-        description: "Conseillé aux associations & entreprises",
+        description: "Conseillé pour prioriser plusieurs projets",
         do: [
             "Toutes les fonctionnalités Aurore",
             "Forfait de 5 études",
             "Tableau de bord de vos différentes études",
-            "Export des synthèses en PDF",
-            "Résultats en 3 à 4 jours ouvrés",
+            "Prix réduits",
+           
         ],
-        price: "180 €",
+        price: "X €",
         item: "les 5 études",
         icon: <Sun className={IconStyle}/>,
         cta: "Commander 5 études"
@@ -43,9 +43,9 @@ const TARIFS = [
         do: [
             "Toutes les fonctionnalités Zénith",
             "Nombre d'études illimité",
-            "Paramétrage personnalisé (tarif, types d'installation,...)",
-            "Accompagnement sur des projets d'écoquartiers et boucle d'auto-consommation",
-            "Support 5j/7",
+            "Paramétrage personnalisé (ombrage, autoconsommation collective ...)",
+            "Accompagnement personalisé sur votre projet",
+
         ],
         price: "---",
         item: "selon besoins",

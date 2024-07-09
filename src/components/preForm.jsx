@@ -32,23 +32,29 @@ export function PreForm() {
                     </CardHeader>
                     <CardContent className="flex flex-col gap-4 max-w-lg text-justify">
                         <blockquote className="my-2 border-l-2 pl-6 italic">
-                            Quelle est la surface de panneaux solaire optimale pour mon bâtiment ?
+                        - Lequel de mes projets est le plus rentable ? <p></p>
+                        - Quelle est la surface de panneaux que je dois installer ?<p></p>
+                        - En combien de temps j'aurais amorti mon investissement ? Est-ce rentable ?<p></p>
+                        - Combien je vais autoconsommer ? combien je vais autoproduire ?<p></p>
+                        - L'autoconsommation est faite pour moi ?<p></p>                  
                         </blockquote>
                         <p>
-                            Notre logiciel analyse votre courbe de consommation et les paramètres de votre installation,
-                            pour simuler son comportement selon différentes configuration.
+                            Si vous vous posez ces questions, nous allons y répondre ! 
+                        </p>
+                        <p>
+                            Notre logiciel analyse votre courbe de consommation et les paramètres de votre installation
+                            pour simuler son comportement selon différentes configurations.
                         </p>
                         <p>
                             Le rapport final vous indiquera les choix optimaux à privilégier selon vos objectifs financiers
-                            et environnementaux, ainsi qu'une projection précise des coûts et bénéfice tout au long de la durée
-                            de vie de vos panneaux.
+                            et environnementaux, ainsi qu'une projection précise des coûts et bénéfices.
                         </p>
                         <a
                             href='/new/form'
                             className="col-span-2 font-semibold px-6 py-4 rounded-sm flex flex-row items-center justify-center group bg-primary stroke-ring hover:bg-accent-foreground"
                         >
                             <Zap className="mr-2 h-4 w-4 text-primary-foreground group-hover:rotate-180 ease-in-out duration-500" />
-                            <span className="text-primary-foreground">Paramétrer ma Simulation</span>
+                            <span className="text-primary-foreground">Lancer ma Simulation</span>
                         </a>
                         <Dialog>
                             <div className='flex flex-row items-baseline w-full justify-center text-muted-foreground'>
@@ -68,7 +74,7 @@ export function PreForm() {
                                 </DialogHeader>
                                 <div className='flex flex-col gap-2 text-justify max-h-64 overflow-y-auto pr-2'>
 
-                                    <p>Bienvenue sur Soleil Bleu, un service en ligne de simulation d'installation solaire. En utilisant notre service, vous acceptez les conditions d'utilisation et la politique de confidentialité suivantes.</p>
+                                    <p>Bienvenue sur Soleil Bleu, un service en ligne de simulation d'installation photovoltaïque. En utilisant notre service, vous acceptez les conditions d'utilisation et la politique de confidentialité suivantes.</p>
 
                                     <h2 className="font-semibold">1. Collecte et utilisation des données personnelles</h2>
 
@@ -77,8 +83,8 @@ export function PreForm() {
                                     <ul className="list-disc list-inside">
                                         <li>Nom et prénom</li>
                                         <li>Adresse e-mail</li>
-                                        <li>Code Postal</li>
-                                        <li>Données de consommation électrique (fichiers .csv fournis par Enedis)</li>
+                                        <li>Code Postal (pour affiner au mieux les données d'ensolleillement)</li>
+                                        <li>Données de consommation électriques (fichiers .csv fournis par Enedis)</li>
                                         <li>Paramètres du projet solaire (type, inclinaison, ...)</li>
                                     </ul>
 
@@ -116,7 +122,7 @@ export function PreForm() {
                                     <ul className="list-disc list-inside">
                                         <li>Droit d'accès, de rectification, d'effacement, de limitation du traitement, de portabilité et d'opposition</li>
                                     </ul>
-                                    <p>Pour exercer ces droits, contactez-nous à <a href="mailto:samuel.tourvieille-de-labrouhe@imt-atlantique.net" class="text-blue-500 underline">samuel.tourvieille-de-labrouhe@imt-atlantique.net</a>.</p>
+                                    <p>Pour exercer ces droits, contactez-nous à <a href="mailto:sam.touvieille@gmail.com" class="text-blue-500 underline">sam.touvieille@gmail.com</a>.</p>
 
                                     <h2 className="font-semibold">6. Sécurité des données</h2>
                                     <p>Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles pour protéger vos données personnelles.</p>
@@ -128,7 +134,7 @@ export function PreForm() {
                                     <p>Nous nous réservons le droit de modifier cette politique à tout moment. Les modifications seront publiées sur cette page avec une nouvelle date de mise à jour. Veuillez consulter cette page régulièrement.</p>
 
                                     <h2 className="font-semibold">9. Contact</h2>
-                                    <p>Pour toute question ou préoccupation, veuillez nous contacter à : <a href="mailto:samuel.tourvieille-de-labrouhe@imt-atlantique.net" class="text-blue-500 underline">samuel.tourvieille-de-labrouhe@imt-atlantique.net</a></p>
+                                    <p>Pour toute question ou préoccupation, veuillez nous contacter à : <a href="mailto:sam.touvieille@gmail.com" class="text-blue-500 underline">sam.touvieille@gmail.com</a></p>
 
                                     <p>En utilisant Soleil Bleu, vous reconnaissez avoir lu et compris ces conditions et vous acceptez d'être lié par ces termes.</p>
                                 </div>

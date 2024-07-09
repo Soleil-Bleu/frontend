@@ -13,11 +13,12 @@ export function Third() {
                     <span className="text-5xl font-bold tracking-tight">
                         Viable et durable
                     </span>
-                    <span className="font-secondary flex flex-col gap-4">
+                    <span className="font-secondary text-justify flex flex-col gap-4">
                         <span>
-                            Aujourd'hui, le plus rentable est de consommer directement sa production solaire.
-                            Pourtant, les panneaux les plus puissants (et coûteux) sont rarement adaptés à vos besoins,
-                            car ils vous obligent à revendre le surplus d'électricité à un tarif peu avantageux.
+                        Aujourd'hui, l'autoconsommation est de plus en plus présente,
+                         elle permet de répondre efficacement à l'augmentation des prix de l'électricité. 
+                         Il est nécessaire d'arbitrer entre une bonne autoconsommation et les économies d'échelle.
+                         L'arbitrage est complexe, on vous facilite la tâche avec nos études.
                         </span>
                         <span>
                             En croisant votre consommation en temps réelle avec nos données climatiques, nous déterminons
