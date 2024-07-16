@@ -31,13 +31,16 @@ export function PreForm() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="flex flex-col gap-4 max-w-lg text-justify">
-                        <blockquote className="my-2 border-l-2 pl-6 italic">
-                        - Lequel de mes projets est le plus rentable ? <p></p>
-                        - Quelle est la surface de panneaux que je dois installer ?<p></p>
-                        - En combien de temps j'aurais amorti mon investissement ? Est-ce rentable ?<p></p>
-                        - Combien je vais autoconsommer ? combien je vais autoproduire ?<p></p>
-                        - L'autoconsommation est faite pour moi ?<p></p>                  
-                        </blockquote>
+                    <blockquote class="my-2 border-l-2 pl-6 italic leading-loose">
+    <ul class="list-['-_'] list-inside">
+        <li>Quel projets serait le plus rentable ?</li>
+        <li>Quelle surface de panneaux installer ?</li>
+        <li>Sera-t-il rentable ? Amorti rapidement ?</li>
+        <li>Combien vais-je autoconsommer ? autoproduire ?</li>
+        <li>L'autoconsommation est-elle faite pour moi ?</li>
+    </ul>
+</blockquote>
+
                         <p>
                             Si vous vous posez ces questions, nous allons y répondre ! 
                         </p>
@@ -122,7 +125,7 @@ export function PreForm() {
                                     <ul className="list-disc list-inside">
                                         <li>Droit d'accès, de rectification, d'effacement, de limitation du traitement, de portabilité et d'opposition</li>
                                     </ul>
-                                    <p>Pour exercer ces droits, contactez-nous à <a href="mailto:sam.touvieille@gmail.com" class="text-blue-500 underline">sam.touvieille@gmail.com</a>.</p>
+                                    <p>Pour exercer ces droits, contactez-nous à <a href="mailto:sam.tourvieille@gmail.com" class="text-blue-500 underline">sam.tourvieille@gmail.com</a>.</p>
 
                                     <h2 className="font-semibold">6. Sécurité des données</h2>
                                     <p>Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles pour protéger vos données personnelles.</p>
@@ -134,7 +137,7 @@ export function PreForm() {
                                     <p>Nous nous réservons le droit de modifier cette politique à tout moment. Les modifications seront publiées sur cette page avec une nouvelle date de mise à jour. Veuillez consulter cette page régulièrement.</p>
 
                                     <h2 className="font-semibold">9. Contact</h2>
-                                    <p>Pour toute question ou préoccupation, veuillez nous contacter à : <a href="mailto:sam.touvieille@gmail.com" class="text-blue-500 underline">sam.touvieille@gmail.com</a></p>
+                                    <p>Pour toute question ou préoccupation, veuillez nous contacter à : <a href="mailto:sam.tourvieille@gmail.com" class="text-blue-500 underline">sam.tourvieille@gmail.com</a></p>
 
                                     <p>En utilisant Soleil Bleu, vous reconnaissez avoir lu et compris ces conditions et vous acceptez d'être lié par ces termes.</p>
                                 </div>

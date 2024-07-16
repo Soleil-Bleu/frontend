@@ -17,11 +17,11 @@ export function Third() {
                         <span>
                         Aujourd'hui, l'autoconsommation est de plus en plus présente,
                          elle permet de répondre efficacement à l'augmentation des prix de l'électricité. 
-                         Il est nécessaire d'arbitrer entre une bonne autoconsommation et les économies d'échelle.
-                         L'arbitrage est complexe, on vous facilite la tâche avec nos études.
+                         Mais difficile d'arbitrer entre une bonne autoconsommation et les économies d'échelle...
+                         Nos études rendent cette tâche extrêment simple !
                         </span>
                         <span>
-                            En croisant votre consommation en temps réelle avec nos données climatiques, nous déterminons
+                            En croisant votre consommation en temps réel avec nos données climatiques, nous déterminons
                             les paramètres idéaux qui optimisent votre projet.
                         </span>
 
