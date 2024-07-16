@@ -6,14 +6,14 @@ import {
 } from "@/components/ui/toggle-group"
 
 const orientations = [
-  { value: 'N', icon: ArrowUp, label: 'Nord', position: 'row-start-1 col-start-2' },
-  { value: 'NE', icon: ArrowUpRight, label: 'Nord-Est', position: 'row-start-1 col-start-3' },
-  { value: 'E', icon: ArrowRight, label: 'Est', position: 'row-start-2 col-start-3' },
-  { value: 'SE', icon: ArrowDownRight, label: 'Sud-Est', position: 'row-start-3 col-start-3' },
-  { value: 'S', icon: ArrowDown, label: 'Sud', position: 'row-start-3 col-start-2' },
-  { value: 'SO', icon: ArrowDownLeft, label: 'Sud-Ouest', position: 'row-start-3 col-start-1' },
-  { value: 'O', icon: ArrowLeft, label: 'Ouest', position: 'row-start-2 col-start-1' },
-  { value: 'NO', icon: ArrowUpLeft, label: 'Nord-Ouest', position: 'row-start-1 col-start-1' },
+  { value: 0, icon: ArrowUp, label: 'Nord', position: 'row-start-1 col-start-2' },
+  { value: 45, icon: ArrowUpRight, label: 'Nord-Est', position: 'row-start-1 col-start-3' },
+  { value: 90, icon: ArrowRight, label: 'Est', position: 'row-start-2 col-start-3' },
+  { value: 135, icon: ArrowDownRight, label: 'Sud-Est', position: 'row-start-3 col-start-3' },
+  { value: 180, icon: ArrowDown, label: 'Sud', position: 'row-start-3 col-start-2' },
+  { value: 225, icon: ArrowDownLeft, label: 'Sud-Ouest', position: 'row-start-3 col-start-1' },
+  { value: 270, icon: ArrowLeft, label: 'Ouest', position: 'row-start-2 col-start-1' },
+  { value: 315, icon: ArrowUpLeft, label: 'Nord-Ouest', position: 'row-start-1 col-start-1' },
 ];
 
 const CompassSelect = ({ selectedOrientation, onSelect, errors }) => {
@@ -34,10 +34,10 @@ const CompassSelect = ({ selectedOrientation, onSelect, errors }) => {
         ))}
         <div className="flex justify-center items-center p-2 col-start-2 row-start-2 pointer-events-none">
           <div className="flex items-center justify-center h-6 w-6">
-            {selectedOrientation ? (
-              <span className="text-xl font-semibold">{selectedOrientation}</span>
+            {selectedOrientation !== '' ? (
+              <span className="text-xl font-semibold">{selectedOrientation}°</span>
             ) : (
-              <Compass className="h-6 w-6 text-gray-500" />
+              <Compass className="h-6 w-6 text-gray-500 rotate-[-45deg]" />
             )}
           </div>
         </div>

@@ -202,7 +202,7 @@ export function FormPage() {
                     type="number"
                     value={formData.surface}
                     onChange={handleChange}
-                    placeholder="35" />
+                    placeholder="120" />
                   <Label htmlFor="surface">m²</Label>
                 </div>
                 {errors.surface && <span className="text-red-500">{errors.surface}</span>}
@@ -216,7 +216,7 @@ export function FormPage() {
                 {errors.orientation && <span className="text-red-500">{errors.orientation}</span>}
               </div>
               <div className="grid w-full max-w-sm items-center gap-2">
-                <Label htmlFor="inclinaison">Inclinaison de la surface</Label>
+                <Label htmlFor="inclinaison">Inclinaison de la surface :</Label>
                 <div className='flex flex-row items-center space-x-2 space-y-0'>
                   <Input
                     className="text-right w-3/4 [&::-webkit-inner-spin-button]:appearance-none"
@@ -276,7 +276,7 @@ export function FormPage() {
               <div className='flex flex-col col-span-2 gap-4 bg-secondary/40 p-4 rounded-md'>
                 <div className="flex flex-row items-center gap-2">
                   <Label className="text-lg">Prêt</Label>
-                  <p className='text-primary/80 text-xs'>(optionnel)</p>
+                  <p className='text-primary/80 text-xs'>(optionnel, seulement si vous en envisagez un)</p>
                 </div>
                 <div className='flex flex-row gap-8'>
                   <div className="grid w-full max-w-sm items-center gap-2">

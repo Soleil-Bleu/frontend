@@ -33,24 +33,24 @@ export function PreForm() {
                     <CardContent className="flex flex-col gap-4 max-w-lg text-justify">
                     <blockquote class="my-2 border-l-2 pl-6 italic leading-loose">
     <ul class="list-['-_'] list-inside">
-        <li>Quel projets serait le plus rentable ?</li>
-        <li>Quelle surface de panneaux installer ?</li>
-        <li>Sera-t-il rentable ? Amorti rapidement ?</li>
+        <li>Quel projet serait le plus rentable ?</li>
+        <li>Sera-t-il amorti rapidement ? lourd à investir ?</li>
+        <li>Quelle est la surface optimale à installer ?</li>
         <li>Combien vais-je autoconsommer ? autoproduire ?</li>
-        <li>L'autoconsommation est-elle faite pour moi ?</li>
+        {/* <li>L'autoconsommation est-elle faite pour moi ?</li> */}
     </ul>
 </blockquote>
 
                         <p>
-                            Si vous vous posez ces questions, nous allons y répondre ! 
+                            Notre simulation va répondre à ces questions !
                         </p>
                         <p>
-                            Notre logiciel analyse votre courbe de consommation et les paramètres de votre installation
-                            pour simuler son comportement selon différentes configurations.
+                            En analysant votre courbe de consommation et les paramètres de votre installation
+                            , nous pouvons simuler son comportement selon différentes configurations.
                         </p>
                         <p>
                             Le rapport final vous indiquera les choix optimaux à privilégier selon vos objectifs financiers
-                            et environnementaux, ainsi qu'une projection précise des coûts et bénéfices.
+                            et environnementaux, ainsi qu'une projection précise de leurs coûts et bénéfices.
                         </p>
                         <a
                             href='/new/form'
