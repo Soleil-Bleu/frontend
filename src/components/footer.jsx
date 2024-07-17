@@ -7,7 +7,7 @@ export function Footer() {
                 <h2 className="text-5xl font-bold tracking-tight text-primary">
                     {"L'Association Soleil Bleu"}
                 </h2>
-                <div className="grid grid-cols-2 px-8 pt-12 pb-8 gap-x-12 gap-y-6 rounded-lg font-secondary text-primary bg-background/50 backdrop-brightness-150 backdrop-blur-lg">
+                <div className="grid grid-cols-2 px-8 max-w-6xl pt-12 pb-8 gap-x-12 gap-y-6 rounded-lg font-secondary text-primary bg-background/50 backdrop-brightness-150 backdrop-blur-lg">
                     <span className="font-secondary text-justify">
                         {`Soleil Bleu est une association (loi 1901), fondée suite au constat de 2 ingénieurs
                         en énergies : l'énergie solaire occupe une place centrale dans la transition écologique
