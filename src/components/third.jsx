@@ -5,11 +5,11 @@ export function Third() {
         <section id="valeurs" className="w-full flex flex-col p-8 py-24 items-center bg-background">
             <div className="grid grid-cols-2 gap-16 items-center">
                 <img
-                    src="/solar-panel-installation.jpg"
+                    src="/installation-1.jpg"
                     alt="installation de panneaux solaires"
                     className="bg-cover max-w-[45vw] max-h-screen rounded-lg"
                 />
-                <div className="flex flex-col gap-8 justify-around max-w-[500px] text-secondary-foreground">
+                <div className="flex flex-col gap-8 justify-around max-w-xl text-secondary-foreground">
                     <span className="text-5xl font-bold tracking-tight">
                         Viable et durable
                     </span>

@@ -4,7 +4,7 @@ export function Second() {
     return (
         <section className="w-full flex flex-col px-8 py-24 bg-secondary">
             <div className="grid grid-cols-2 gap-8 items-center justify-center">
-                <div className="flex flex-col gap-6 justify-around max-w-[500px] text-secondary-foreground">
+                <div className="flex flex-col gap-6 max-w-xl text-secondary-foreground">
                     <span className="text-5xl font-bold tracking-tight">
                         Optimisez les coûts de votre installation
                     </span>
@@ -30,8 +30,8 @@ export function Second() {
                 </div>
                 <div className="px-2 py-4 max-w-[45vw] max-h-screen">
                     <img
-                        src="/installation-1.jpg"
-                        alt="installation d'un panneau"
+                        src="/screen-simu.png"
+                        alt="capture d'écran d'une simulation"
                         className="rounded-lg"
                     />
                     {/* <img
