@@ -19,7 +19,7 @@ const TARIFS = [
             "Projections financières sur la durée de vie du projet",
             "Export des synthèses en PDF",
         ],
-        price: "X €",
+        price: "▒▒▒ €",
         item: "l'étude",
         icon: <Zap className={IconStyle}/>,
         cta: "Analyser mon projet"
@@ -33,7 +33,7 @@ const TARIFS = [
             "Prix réduits",
            
         ],
-        price: "X €",
+        price: "▒▒▒ €",
         item: "les 5 études",
         icon: <Sun className={IconStyle}/>,
         cta: "Commander 5 études"
@@ -47,7 +47,7 @@ const TARIFS = [
             "Accompagnement personalisé sur votre projet",
 
         ],
-        price: "---",
+        price: "▒▒▒ €",
         item: "selon besoins",
         icon: <Sparkles className={IconStyle}/>,
         cta: "Contacter l'association"
