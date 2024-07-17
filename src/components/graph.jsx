@@ -53,7 +53,7 @@ const VULGA = {
 const INDICATEURS = [
     { key: 'amortissement', label: 'Amortissement', unit: 'ans' },
     { key: 'bilan_20_ans', label: 'Bilan sur 20 ans', unit: '€' },
-    { key: 'tri', label: 'Taux de rendement interne (TRI)', unit: '%' },
+    /* { key: 'tri', label: 'Taux de rendement interne (TRI)', unit: '%' }, */
     { key: 'autoconso', label: 'Auto-consommation', unit: '%' },
     { key: 'autoprod', label: 'Auto-production', unit: '%' }
 ];
@@ -68,40 +68,34 @@ export function Graph({ data }) {
             name: 'Puissance max.',
             puissance: data.scenarios.puissance_max,
             percentage: maxPercent,
-            indicateurs: []
         },
         {
             name: 'Amortissement rapide',
             puissance: data.scenarios.amortissement_rapide,
             percentage: (data.scenarios.amortissement_rapide / maxPuissance) * maxPercent,
-            indicateurs: []
         },
         {
             name: 'Autoconsommation totale',
             puissance: data.scenarios.autoconso_100 || minPuissance,
             percentage: data.scenarios.autoconso_100 ? (data.scenarios.autoconso_100 / maxPuissance) * maxPercent : (minPuissance / maxPuissance) * maxPercent,
-            indicateurs: [],
             warning: data.scenarios.autoconso_100 ? '' : 'Non atteignable dans cette configuration : consommation inadaptée.'
         },
         {
             name: 'BEPOS',
             puissance: data.scenarios.bepos || maxPuissance,
             percentage: data.scenarios.bepos ? (data.scenarios.bepos / maxPuissance) * maxPercent : maxPercent,
-            indicateurs: [],
             warning: data.scenarios.bepos ? '' : 'Non atteignable dans cette configuration : surface insuffisante.'
         },
         {
             name: 'Bénéfices totaux',
             puissance: data.scenarios.benefices_max,
             percentage: (data.scenarios.benefices_max / maxPuissance) * maxPercent,
-            indicateurs: []
         },
-        {
+        /* {
             name: 'Sécurité',
             puissance: data.scenarios.rentable,
             percentage: (data.scenarios.rentable / maxPuissance) * maxPercent,
-            indicateurs: []
-        }
+        } */
     ];
 
     const [highlightedPuissance, setHighlightedPuissance] = useState(scenarios[0].puissance);
@@ -220,7 +214,7 @@ export function Graph({ data }) {
                             <span className='text-secondary-foreground font-secondary text-5xl tracking-tight'>
                                 {Math.round(useAnimatedNumber(scenarios[scenarioIndex].puissance))}
                             </span>
-                            <span className='text-secondary font-secondary text-lg'>kW (crête)</span>
+                            <span className='font-secondary text-lg'>kW (crête)</span>
                         </div>
                     </div>
                 </div>
@@ -234,9 +228,9 @@ export function Graph({ data }) {
                             if (value === undefined) return null;
                             const percentage = (value / Math.max(...data.points_simu.map(d => d[key]))) * 100;
                             return (
-                                <span key={index} className="font-secondary">
+                                <span key={index} className="font-secondary font-medium">
                                     {`${label}`} {`: `}
-                                    <span className='text-secondary'>
+                                    <span className='text-secondary-foreground font-normal'>
                                         {value} {unit}
                                     </span>
                                     <div className="w-full h-[16px] bg-secondary my-2 rounded-full overflow-hidden">
@@ -296,6 +290,48 @@ export function Graph({ data }) {
                             <Tooltip content={<CustomTooltip />} cursor={true} />
                         </ComposedChart>
                     </ResponsiveContainer>
+                </div>
+                <div className={`m-8 flex flex-col col-span-1 ${scenarios[scenarioIndex].warning ? 'opacity-40' : ''} duration-1000`}>
+                    <div className=' relative z-10 translate-y-1/2 left-4 text-primary text-lg bg-background px-2 w-fit'>
+                        Surface à installer
+                    </div>
+                    <div className={`duration-300 ease-in-out h-full relative p-6 border rounded-lg flex flex-col items-center justify-center`}>
+                        <Ring progress={(highlightedData.surface / Math.max(...data.points_simu.map(d => d.surface))) * 96} />
+                        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center'>
+                            <span className='text-secondary-foreground font-secondary text-5xl tracking-tight'>
+                                {Math.round(useAnimatedNumber(highlightedData.surface))}
+                            </span>
+                            <span className='font-secondary text-lg'>m²</span>
+                        </div>
+                    </div>
+                </div>
+                <div className={`m-8 flex flex-col col-span-1 ${scenarios[scenarioIndex].warning ? 'opacity-40' : ''} duration-1000`}>
+                    <div className=' relative z-10 translate-y-1/2 left-4 text-primary text-lg bg-background px-2 w-fit'>
+                        Coût de l'installation
+                    </div>
+                    <div className={`duration-300 ease-in-out h-full relative p-6 border rounded-lg flex flex-col items-center justify-center`}>
+                        <Ring progress={(highlightedData.cout_installation / Math.max(...data.points_simu.map(d => d.cout_installation))) * 96} />
+                        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center'>
+                            <span className='text-secondary-foreground font-secondary text-3xl tracking-tight'>
+                                {Math.round(useAnimatedNumber(highlightedData.cout_installation))}
+                            </span>
+                            <span className='font-secondary text-lg'>€</span>
+                        </div>
+                    </div>
+                </div>
+                <div className={`m-8 flex flex-col col-span-1 ${scenarios[scenarioIndex].warning ? 'opacity-40' : ''} duration-1000`}>
+                    <div className=' relative z-10 translate-y-1/2 left-4 text-primary text-lg bg-background px-2 w-fit'>
+                        Baisse de vos factures ENEDIS
+                    </div>
+                    <div className={`duration-300 ease-in-out h-full relative p-6 border rounded-lg flex flex-col items-center justify-center`}>
+                        <Ring progress={(highlightedData.baisse_facture / Math.max(...data.points_simu.map(d => d.baisse_facture))) * 96} />
+                        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center'>
+                            <span className='text-secondary-foreground font-secondary text-4xl tracking-tight'>
+                                {Math.round(useAnimatedNumber(highlightedData.baisse_facture))}
+                            </span>
+                            <span className='font-secondary text-lg'>%</span>
+                        </div>
+                    </div>
                 </div>
             </div >
         </div >
