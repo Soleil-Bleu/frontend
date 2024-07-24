@@ -106,34 +106,6 @@ export function Graph({ data }) {
     const contentRef = useRef(null);
     const [contentHeight, setContentHeight] = useState('auto');
 
-    const useAnimatedNumber = (targetNumber, duration = 600) => {
-        const [displayNumber, setDisplayNumber] = useState(targetNumber);
-
-        useEffect(() => {
-            const diff = targetNumber - displayNumber;
-            const step = 10 * Math.round((targetNumber - displayNumber) / Math.abs(targetNumber - displayNumber));
-            const totalFrames = Math.abs(Math.round(diff / step));
-            const frameDuration = Math.round(duration / totalFrames);
-
-            if (diff === 0) return;
-
-            const interval = setInterval(() => {
-                setDisplayNumber((prevNumber) => {
-                    const updatedNumber = prevNumber + step;
-                    if ((step > 0 && updatedNumber >= targetNumber) || (step < 0 && updatedNumber <= targetNumber)) {
-                        clearInterval(interval);
-                        return targetNumber;
-                    }
-                    return updatedNumber;
-                });
-            }, frameDuration);
-
-            return () => clearInterval(interval);
-        }, [targetNumber, duration]);
-
-        return displayNumber;
-    };
-
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             setCoordScenario({ ...coordRef.current });
@@ -212,7 +184,7 @@ export function Graph({ data }) {
                         <Ring progress={scenarios[scenarioIndex].percentage} />
                         <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center'>
                             <span className='text-secondary-foreground font-secondary text-5xl tracking-tight'>
-                                {Math.round(useAnimatedNumber(scenarios[scenarioIndex].puissance))}
+                                {Math.round(scenarios[scenarioIndex].puissance)}
                             </span>
                             <span className='font-secondary text-lg'>kW (crête)</span>
                         </div>
@@ -299,7 +271,7 @@ export function Graph({ data }) {
                         <Ring progress={(highlightedData.surface / Math.max(...data.points_simu.map(d => d.surface))) * 96} />
                         <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center'>
                             <span className='text-secondary-foreground font-secondary text-5xl tracking-tight'>
-                                {Math.round(useAnimatedNumber(highlightedData.surface))}
+                                {Math.round(highlightedData.surface)}
                             </span>
                             <span className='font-secondary text-lg'>m²</span>
                         </div>
@@ -313,7 +285,7 @@ export function Graph({ data }) {
                         <Ring progress={(highlightedData.cout_installation / Math.max(...data.points_simu.map(d => d.cout_installation))) * 96} />
                         <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center'>
                             <span className='text-secondary-foreground font-secondary text-3xl tracking-tight'>
-                                {Math.round(useAnimatedNumber(highlightedData.cout_installation))}
+                                {Math.round(highlightedData.cout_installation)}
                             </span>
                             <span className='font-secondary text-lg'>€</span>
                         </div>
@@ -327,7 +299,7 @@ export function Graph({ data }) {
                         <Ring progress={(highlightedData.baisse_facture / Math.max(...data.points_simu.map(d => d.baisse_facture))) * 96} />
                         <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center'>
                             <span className='text-secondary-foreground font-secondary text-4xl tracking-tight'>
-                                {Math.round(useAnimatedNumber(highlightedData.baisse_facture))}
+                                {Math.round(highlightedData.baisse_facture)}
                             </span>
                             <span className='font-secondary text-lg'>%</span>
                         </div>
