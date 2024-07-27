@@ -34,9 +34,9 @@ export function PreForm() {
                     <blockquote class="my-2 border-l-2 pl-6 italic leading-loose">
     <ul class="list-['-_'] list-inside">
         <li>Quel projet serait le plus rentable ?</li>
-        <li>Sera-t-il amorti rapidement ? lourd à investir ?</li>
+        <li>Sera-t-il amorti rapidement ?</li>
         <li>Quelle est la surface optimale à installer ?</li>
-        <li>Combien vais-je autoconsommer ? autoproduire ?</li>
+        <li>Combien vais-je autoconsommer ? Autoproduire ?</li>
         {/* <li>L'autoconsommation est-elle faite pour moi ?</li> */}
     </ul>
 </blockquote>
@@ -45,8 +45,7 @@ export function PreForm() {
                             Notre simulation va répondre à ces questions !
                         </p>
                         <p>
-                            En analysant votre courbe de consommation et les paramètres de votre installation
-                            , nous pouvons simuler son comportement selon différentes configurations.
+                            En analysant votre courbe de consommation et les paramètres de votre installation, nous pouvons simuler son comportement selon différentes configurations.
                         </p>
                         <p>
                             Le rapport final vous indiquera les choix optimaux à privilégier selon vos objectifs financiers
