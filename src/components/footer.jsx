@@ -17,9 +17,8 @@ export function Footer() {
                 `}
             </span>
             <span className="font-secondary text-justify">
-                {`En mettant en œuvre des outils mathématiques et informatiques, 
-                nous tentons de rendre ces études accessibles aux structures modestes et rendre le solaire accessible au plus grand nombre.
-            `} <br />
+                {`En utilisant des outils mathématiques et informatiques, 
+                nous visons à rendre ces études accessibles aux structures modestes pour démocratiser l'accès à l'énergie solaire.`}
             </span>
             <div /* https://mailto.vercel.app/ */
                 className="font-secondary font-bold flex flex-row items-center justify-end underline underline-offset-2 col-span-2 group">

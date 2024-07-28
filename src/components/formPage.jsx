@@ -192,7 +192,7 @@ export function FormPage() {
               </div>
               <div className="grid w-full max-w-sm items-center gap-2">
                 <div className='flex flex-row gap-2 items-center'>
-                  <Label htmlFor="surface">Surface max disponible :</Label>
+                  <Label htmlFor="surface">Surface max. disponible :</Label>
                 </div>
                 <div className='flex w-3/4 flex-row items-center space-x-2 space-y-0'>
                   <Input
@@ -264,7 +264,7 @@ export function FormPage() {
                       <img src="/screen_enedis.png" alt="capture d'écran du site Enedis" />
                       <p className='italic'>
                         Veillez à bien sélectionner le Type de données <code>Consommation horaire</code> et
-                        une Période couvrant au moins une années complète afin de bénéficier d'une précision maximale.
+                        une Période couvrant au moins une année complète afin de bénéficier d'une précision maximale.
                       </p>
                     </div>
                     {/*                     <DialogFooter>

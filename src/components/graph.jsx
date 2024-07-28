@@ -23,12 +23,12 @@ const VULGA = {
     },
     'Amortissement rapide': {
         description: `Ce scénario vous indique la puissance à installer pour obtenir le temps d'amortissement le plus court.`,
-        financier: `Votre investissement initial sera récupéré plus rapidement grâce aux économies sur les factures d'électricité et aux gains de la revente de l'électricité produite. L'ammortissement moyen se situe entre 10 et 12ans chez les particuliers. Vous êtes en dessous ? Foncez ! Au dessus, réflechissez bien avant d'investir ! Gardez à l'esprit que les contrats de revente d'électricité sont de 20 ans.  `,
+        financier: `Votre investissement initial sera récupéré plus rapidement grâce aux économies sur les factures d'électricité et aux gains de la revente de l'électricité produite. L'amortissement moyen se situe entre 10 et 12 ans chez les particuliers. Vous êtes en dessous ? Foncez ! Au dessus, réflechissez bien avant d'investir ! Gardez à l'esprit que les contrats de revente d'électricité sont de 20 ans.  `,
         environnement: `Une récupération rapide de l'investissement permet de réinvestir au plus vite dans d'autres projets d'énergies renouvelables .`
     },
     'Autoconsommation totale': {
         description: `Ce scénario vous montre la puissance maximale que vous pouvez installer tout en consommant 100% de l'électricité produite.`,
-        financier: `Tout ce que vous produisez est consommé immédiatement, vous ne serez pas obligé de vous raccorder au réseau ENEDIS pour revendre l'éléctricité. Généralement cela permet de couvrir 10 à 15% des besoins (taux d'autoproduction) réduisant votre dépendance aux fournisseurs d'électricité. Vous êtes à moins de 10% d'autoproduction avec ce scénario, ce n'est peut être pas la bonne option. Vous êtes à plus de 15% ? C'est sûrement une option intéressante en terme de rentabilité.`,
+        financier: `Tout ce que vous produisez est consommé immédiatement, vous ne serez pas obligé de vous raccorder au réseau ENEDIS pour revendre l'éléctricité. Généralement cela permet de couvrir 10 à 15% des besoins (taux d'autoproduction) réduisant votre dépendance aux fournisseurs d'électricité. Si vous êtes à moins de 10% d'autoproduction avec ce scénario, ce n'est peut être pas la bonne option. Vous êtes à plus de 15% ? C'est sûrement une option intéressante en terme de rentabilité.`,
         environnement: `Consommer l'énergie que vous produisez réduit les pertes de transport et favorise l'indépendance énergétique.`
     },
     'BEPOS': {
@@ -38,7 +38,7 @@ const VULGA = {
     },
     'Bénéfices totaux': {
         description: `Ce scénario vise à maximiser les bénéfices totaux sur une période de 20 ans, correspondant à la durée de votre contrat avec EDF Obligation d'Achat, qui achète l'électricité produite par vos panneaux.`,
-        financier: `En maximisant les bénéfices, vous assurez un retour sur investissement élevé. Cela inclut les économies sur les factures d'électricité et les revenus de la revente d'électricité. Priviligiez cette option si vous souhaitez investir`,
+        financier: `En maximisant les bénéfices, vous assurez un retour sur investissement élevé. Cela inclut les économies sur les factures d'électricité et les revenus de la revente d'électricité. Priviligiez cette option si vous avez une grosse capacité d'investissement.`,
         environnement: `Cette approche encourage la production continue d'énergie renouvelable sur une longue période, réduisant ainsi l'empreinte carbone.`
     },
     'Sécurité': {

@@ -12,7 +12,7 @@ const IconStyle = "mr-2 h-4 w-4 text-secondary-foreground group-hover:rotate-180
 const TARIFS = [
     {
         title: "Aurore",
-        description: "Conseillé pour affiner le dimmensionnement d'un projet",
+        description: "Conseillé pour affiner le dimensionnement d'un projet",
         do: [
             "Analyse de votre profil de consommation",
             "Simulations selon différents scénarios de puissance",
@@ -44,7 +44,7 @@ const TARIFS = [
             "Toutes les fonctionnalités Zénith",
             "Nombre d'études illimité",
             "Paramétrage personnalisé (ombrage, autoconsommation collective ...)",
-            "Accompagnement personalisé sur votre projet",
+            "Accompagnement personnalisé sur votre projet",
 
         ],
         price: "▒▒▒ €",
