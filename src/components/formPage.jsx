@@ -135,7 +135,7 @@ export function FormPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className='grid pt-4 grid-cols-2 w-full items-center gap-14'>
+            <form onSubmit={handleSubmit} className='grid pt-4 grid-cols-2 w-full gap-14'>
 
               <div className="grid w-full max-w-sm items-center gap-2">
                 <Label htmlFor="prix_achat">Prix auquel vous achetez l'électricité :</Label>
@@ -215,11 +215,11 @@ export function FormPage() {
                 />
                 {errors.orientation && <span className="text-red-500">{errors.orientation}</span>}
               </div>
-              <div className="grid w-full max-w-sm items-center gap-2">
+              <div className="flex flex-col w-full max-w-sm items-start gap-2">
                 <Label htmlFor="inclinaison">Inclinaison de la surface :</Label>
-                <div className='flex flex-row items-center space-x-2 space-y-0'>
+                <div className='flex flex-row  w-3/4 items-center space-x-2 space-y-0'>
                   <Input
-                    className="text-right w-3/4 [&::-webkit-inner-spin-button]:appearance-none"
+                    className="text-right w-3/4"
                     name="inclinaison"
                     id="inclinaison"
                     type="number"
