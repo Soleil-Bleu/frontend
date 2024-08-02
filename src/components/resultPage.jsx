@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { supabase } from '@/lib/supabaseClient';
 import { Graph } from '@/components/graph';
 import { LoaderCircle } from 'lucide-react';
-
-const API_URL = import.meta.env.VITE_API_URL;
 
 const ResultPage = () => {
   const { id } = useParams();
@@ -15,18 +13,30 @@ const ResultPage = () => {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await axios.get(`${API_URL}/simulation_result/${id}`);
-        const data = response.data;
-        console.log('API Response:', data); // Log the API response
-        setStatus(data.status);
-        if (data.status === 'Completed') {
-          setResults(data.results); // Access the nested results field
-        } else if (data.status === 'Error') {
-          setError(data.error);
+        const { data, error } = await supabase
+          .from('simulations')
+          .select('*')
+          .eq('form_id', id)
+          .limit(1)
+          .single();
+
+        if (error) {
+          throw error;
+        }
+
+        if (!data) {
+          setStatus('Not found');
+        } else {
+          setStatus(data.status);
+          if (data.status === 'Completed') {
+            setResults(data.results);
+          } else if (data.status === 'Error') {
+            setError(data.error);
+          }
         }
       } catch (err) {
-        console.error('API Error:', err);
-        setError(err.response ? err.response.data.detail : err.message);
+        console.error('Supabase Error:', err);
+        setError(err.message);
       }
     };
 
