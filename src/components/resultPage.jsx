@@ -23,6 +23,12 @@ const ResultPage = () => {
 
       if (error) {
         console.error('Supabase Error:', error);
+        if (error.code === 'PGRST116') {
+          // Handle the specific error when multiple rows are returned
+          setError('Multiple rows returned when only one was expected.');
+        } else {
+          setError(error.message);
+        }
         throw error;
       }
 

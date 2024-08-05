@@ -101,15 +101,12 @@ export function Graph({ data }) {
     const [highlightedPuissance, setHighlightedPuissance] = useState(scenarios[0].puissance);
     const [scenarioIndex, setScenarioIndex] = useState(0);
     const [coordScenario, setCoordScenario] = useState({ x: null, y: null });
-    const [coordsReady, setCoordsReady] = useState(false);
     const coordRef = useRef({ x: 0, y: 0 });
     const contentRef = useRef(null);
-    const [contentHeight, setContentHeight] = useState('auto');
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             setCoordScenario({ ...coordRef.current });
-            setCoordsReady(true);
         }, 300);
 
         return () => clearTimeout(timeoutId);
@@ -118,7 +115,6 @@ export function Graph({ data }) {
     useEffect(() => {
         if (contentRef.current) {
             const currentHeight = contentRef.current.getBoundingClientRect().height;
-            setContentHeight(`${currentHeight}px`);
         }
     }, [scenarioIndex]);
 
