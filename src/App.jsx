@@ -8,10 +8,10 @@ import { Slider } from "@/components/slider";
 import { Third } from "@/components/third";
 import { Tarifs } from "@/components/tarifs";
 import { Footer } from "@/components/footer";
-import { Graph } from '@/components/graph';
 import { FormPage } from '@/components/formPage';
 import { PreForm } from '@/components/preForm';
-import ResultPage from '@/components/resultPage';
+import ResultPage from '@/components/results/resultPage';
+import { Graph } from '@/components/results/graph';
 
 function App() {
   return (

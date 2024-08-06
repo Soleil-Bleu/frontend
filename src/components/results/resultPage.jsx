@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '@/lib/supabaseClient';
-import { Graph } from '@/components/graph';
+import { Graph } from '@/components/results/graph';
 import { LoaderCircle } from 'lucide-react';
 
 const ResultPage = () => {
@@ -23,44 +23,55 @@ const ResultPage = () => {
 
       if (error) {
         console.error('Supabase Error:', error);
+        let errorMessage;
         if (error.code === 'PGRST116') {
-          // Handle the specific error when multiple rows are returned
-          setError('Multiple rows returned when only one was expected.');
+          errorMessage = 'Plusieurs lignes retournées alors qu\'une seule était attendue.';
         } else {
-          setError(error.message);
+          errorMessage = error.message;
         }
-        throw error;
+        setError(`Une erreur s'est produite lors de la récupération des résultats : ${errorMessage}`);
+        throw new Error(errorMessage);
       }
 
       if (!data) {
         console.log('No data found');
         setStatus('Not found');
+        setError('Aucune donnée trouvée pour l\'ID fourni.');
       } else {
         console.log('Data found:', data);
         setStatus(data.status);
         if (data.status === 'Completed') {
           console.log('Status is Completed');
-          setResults(data.results);
+          const results = data.results;
+          if (results && results.points_simu && results.scenarios) {
+            setResults(results);
+          } else {
+            const invalidDataError = 'Structure de données invalide reçue.';
+            console.error(invalidDataError, results);
+            setError(invalidDataError);
+            throw new Error(invalidDataError);
+          }
         } else if (data.status === 'Error') {
           console.log('Status is Error');
-          setError(data.error);
+          setError(data.error || 'Une erreur s\'est produite pendant la simulation.');
+        } else {
+          console.log('Status is Processing or Received');
+          setError('La simulation est toujours en cours. Veuillez patienter un moment et réessayer.');
         }
       }
     } catch (err) {
-      console.error('Error:', err);
-      setError(err.message);
+      console.error('Fetch results error:', err);
+      setError(`Une erreur inattendue s'est produite : ${err.message}`);
     }
   }, [id]);
 
   // Effect to handle polling logic
   useEffect(() => {
     let interval;
-    // Only poll when status is Processing, Not found, or Received
     if (status === 'Processing' || status === 'Not found' || status === 'Received') {
       fetchResults();
       interval = setInterval(fetchResults, 5000);
     }
-    // Cleanup function to stop polling
     return () => clearInterval(interval);
   }, [status, fetchResults]);
 
@@ -81,7 +92,7 @@ const ResultPage = () => {
     );
   }
 
-  if (error) {
+  if (error && status !== 'Completed') {
     return (
       <>
         <div className="z-[-1] fixed inset-0 h-full w-full bg-[radial-gradient(#808387_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_10%,transparent_100%)]" />
@@ -89,6 +100,10 @@ const ResultPage = () => {
           <div className='flex flex-col text-center mb-80 gap-2'>
             <h1 className='text-3xl font-semibold'>Erreur :/</h1>
             <h2 className='text-xl text-muted-foreground text-center'>{error}</h2>
+            <p className='text-muted-foreground text-center'>
+              Si le problème persiste, veuillez contacter le support avec les détails suivants : <br />
+              <code>{JSON.stringify({ id, status, error })}</code>
+            </p>
           </div>
         </div>
       </>
