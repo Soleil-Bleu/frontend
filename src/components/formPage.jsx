@@ -272,6 +272,7 @@ export function FormPage() {
                     </DialogFooter> */}
                   </DialogContent>
                 </Dialog>
+              {/* 
               </div>
               <div className='flex flex-col col-span-2 gap-4 bg-secondary/40 p-4 rounded-md'>
                 <div className="flex flex-row items-center gap-2">
@@ -326,6 +327,7 @@ export function FormPage() {
                   </div>
                 </div>
               </div>
+              */}
               <button
                 type="submit"
                 className="col-span-2 font-semibold px-6 py-4 rounded-sm flex flex-row items-center justify-center group bg-primary stroke-ring hover:bg-accent-foreground"
