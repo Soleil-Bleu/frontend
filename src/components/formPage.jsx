@@ -276,7 +276,7 @@ export function FormPage() {
               <div className='flex flex-col col-span-2 gap-4 bg-secondary/40 p-4 rounded-md'>
                 <div className="flex flex-row items-center gap-2">
                   <Label className="text-lg">Prêt</Label>
-                  <p className='text-primary/80 text-xs'>(optionnel, seulement si vous en envisagez un)</p>
+                  <p className='text-primary/80 text-xs'>(optionnel, seulement si vous envisagez un prêt)</p>
                 </div>
                 <div className='flex flex-row gap-8'>
                   <div className="grid w-full max-w-sm items-center gap-2">
