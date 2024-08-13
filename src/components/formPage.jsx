@@ -273,59 +273,6 @@ export function FormPage() {
                   </DialogContent>
                 </Dialog>
               </div>
-              <div className='flex flex-col col-span-2 gap-4 bg-secondary/40 p-4 rounded-md'>
-                <div className="flex flex-row items-center gap-2">
-                  <Label className="text-lg">Prêt</Label>
-                  <p className='text-primary/80 text-xs'>(optionnel, seulement si vous en envisagez un)</p>
-                </div>
-                <div className='flex flex-row gap-8'>
-                  <div className="grid w-full max-w-sm items-center gap-2">
-                    <Label htmlFor="montant_pret">Montant</Label>
-                    <div className='flex flex-row items-center space-x-2 space-y-0'>
-                      <Input
-                        className="text-right [&::-webkit-inner-spin-button]:appearance-none"
-                        name="montant_pret"
-                        id="montant_pret"
-                        type="number"
-                        value={formData.montant_pret}
-                        onChange={handleChange}
-                        placeholder="15000" />
-                      <Label htmlFor="montant_pret">€</Label>
-                    </div>
-                    {errors.montant_pret && <span className="text-red-500">{errors.montant_pret}</span>}
-                  </div>
-                  <div className="grid w-full max-w-sm items-center gap-2">
-                    <Label htmlFor="taux_pret">Taux</Label>
-                    <div className='flex flex-row items-center space-x-2 space-y-0'>
-                      <Input
-                        className="text-right [&::-webkit-inner-spin-button]:appearance-none"
-                        name="taux_pret"
-                        id="taux_pret"
-                        type="number"
-                        value={formData.taux_pret}
-                        onChange={handleChange}
-                        placeholder="5" />
-                      <Label htmlFor="taux_pret">%</Label>
-                    </div>
-                    {errors.taux_pret && <span className="text-red-500">{errors.taux_pret}</span>}
-                  </div>
-                  <div className="grid w-full max-w-sm items-center gap-2">
-                    <Label htmlFor="duree_pret">Durée</Label>
-                    <div className='flex flex-row items-center space-x-2 space-y-0'>
-                      <Input
-                        className="text-right [&::-webkit-inner-spin-button]:appearance-none"
-                        name="duree_pret"
-                        id="duree_pret"
-                        type="number"
-                        value={formData.duree_pret}
-                        onChange={handleChange}
-                        placeholder="10" />
-                      <Label htmlFor="duree_pret">ans</Label>
-                    </div>
-                    {errors.duree_pret && <span className="text-red-500">{errors.duree_pret}</span>}
-                  </div>
-                </div>
-              </div>
               <button
                 type="submit"
                 className="col-span-2 font-semibold px-6 py-4 rounded-sm flex flex-row items-center justify-center group bg-primary stroke-ring hover:bg-accent-foreground"
