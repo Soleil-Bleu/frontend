@@ -53,7 +53,7 @@ const VULGA = {
 const INDICATEURS = [
     { key: 'amortissement', label: 'Amortissement', unit: 'ans' },
     { key: 'bilan_20_ans', label: 'Bilan sur 20 ans', unit: '€' },
-    /* { key: 'tri', label: 'Taux de rendement interne (TRI)', unit: '%' }, */
+    { key: 'tri', label: 'Taux de rendement interne (TRI)', unit: '%' },
     { key: 'autoconso', label: 'Auto-consommation', unit: '%' },
     { key: 'autoprod', label: 'Auto-production', unit: '%' }
 ];
@@ -293,7 +293,7 @@ export function Graph({ data }) {
                 </div>
                 <div className={`m-8 flex flex-col col-span-1 ${scenarios[scenarioIndex].warning ? 'opacity-40' : ''} duration-1000`}>
                     <div className=' relative z-10 translate-y-1/2 left-4 text-primary text-lg bg-background px-2 w-fit'>
-                        Baisse de vos factures ENEDIS
+                        Baisse de vos factures d'éléctricité
                     </div>
                     <div className={`duration-300 ease-in-out h-full relative p-6 border rounded-lg flex flex-col items-center justify-center`}>
                         <Ring progress={(highlightedData.baisse_facture / Math.max(...data.points_simu.map(d => d.baisse_facture))) * 96} />
