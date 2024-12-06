@@ -38,7 +38,7 @@ export const Slider = () => {
                     Ils nous font confiance
                 </span>
                 <span className="px-8 font-secondary max-w-xl">
-                    Nous collaborons avec des communes, des associations, des entreprises, ainsi que des particuliers.
+                    Nous collaborons avec des communes, des associations et des entreprises.
                 </span>
             </div>
             <div className="relative m-auto flex flex-col gap-[16px] w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent_2%,white_16%,white_84%,transparent_98%)]">

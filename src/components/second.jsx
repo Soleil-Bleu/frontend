@@ -30,7 +30,7 @@ export function Second() {
                 </div>
                 <div className="px-2 py-4 max-w-[45vw] max-h-screen">
                     <img
-                        src="/screen-simu.png"
+                        src="/simulation.png"
                         alt="capture d'écran d'une simulation"
                         className="rounded-lg"
                     />
