@@ -12,45 +12,46 @@ const IconStyle = "mr-2 h-4 w-4 text-secondary-foreground group-hover:rotate-180
 const TARIFS = [
     {
         title: "Aurore",
-        description: "Conseillé pour affiner le dimensionnement d'un projet",
+        description: "Pour les connaisseurs, remplissez un questionnaire en ligne",
         do: [
             "Analyse de votre profil de consommation",
-            "Simulations selon différents scénarios de puissance",
+            "Simulations selon différents scénarios",
             "Projections financières sur la durée de vie du projet",
-            "Export des synthèses en PDF",
+            "Rapport de synthèses",
         ],
-        price: "▒▒▒ €",
+        price: "100 €",
         item: "l'étude",
         icon: <Zap className={IconStyle}/>,
-        cta: "Analyser mon projet"
+        cta: "Simuler mon projet"
     }, {
         title: "Zénith",
-        description: "Conseillé pour prioriser plusieurs projets",
+        description: "Pour un accompagnement aux petits oignons",
         do: [
             "Toutes les fonctionnalités Aurore",
-            "Forfait de 5 études",
-            "Tableau de bord de vos différentes études",
-            "Prix réduits",
+            "Un accompagnement humain le long de l'étude",
+            "Etude d'orientation, d'inclinaison d'ombrage",
+            "Personnalisation de l'étude selon vos besoins",
+            "Rédaction d'un cahier des charges pour installateurs (en option)"
            
         ],
-        price: "▒▒▒ €",
-        item: "les 5 études",
+        price: "500 €",
+        item: "l'étude",
         icon: <Sun className={IconStyle}/>,
-        cta: "Commander 5 études"
+        cta: "Nous contacter"
     }, {
         title: "Firmament",
-        description: "Conseillé aux communes",
+        description: "Pour un projet d'autoconsommation collective",
         do: [
             "Toutes les fonctionnalités Zénith",
-            "Nombre d'études illimité",
-            "Paramétrage personnalisé (ombrage, autoconsommation collective ...)",
-            "Accompagnement personnalisé sur votre projet",
+            "Optimisation de la boucle énegétique",
+            "Vulgarisation auprès des futurs consommateurs (en option)",
+    
 
         ],
-        price: "▒▒▒ €",
-        item: "selon besoins",
+        price: "500-2000 €",
+        item: "l'étude, selon projet",
         icon: <Sparkles className={IconStyle}/>,
-        cta: "Contacter l'association"
+        cta: "Nous contacter"
     }
 ]
 
