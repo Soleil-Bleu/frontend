@@ -22,7 +22,7 @@ export function Footer() {
             </span>
             <div /* https://mailto.vercel.app/ */
                 className="font-secondary font-bold flex flex-row items-center justify-end underline underline-offset-2 col-span-2 group">
-                <a href="mailto:sam.tourvieille@gmail.com?subject=Contact%20b%C3%A9n%C3%A9vole%20%7C%20Soleil%20Bleu&body=Hello%2C%20je%20souhaite%20int%C3%A9grer%20l'association%20Soleil%20Bleu%2C%20prenons%20contact%20!"
+                <a href="mailto:contact@soleil-bleu.pro?subject=Contact%20b%C3%A9n%C3%A9vole%20%7C%20Soleil%20Bleu&body=Hello%2C%20je%20souhaite%20int%C3%A9grer%20l'association%20Soleil%20Bleu%2C%20prenons%20contact%20!"
                 >
                     {"Nous contacter"}
                 </a>

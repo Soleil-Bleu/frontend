@@ -11,7 +11,7 @@ import { CircleCheck, Zap, Sun, Sparkles } from "lucide-react";
 const IconStyle = "mr-2 h-4 w-4 text-secondary-foreground group-hover:rotate-180 ease-in-out duration-500"
 const TARIFS = [
     {
-        title: "Aurore",
+        title: "Essentiel",
         description: "Pour les connaisseurs, remplissez un questionnaire en ligne",
         do: [
             "Analyse de votre profil de consommation",
@@ -21,37 +21,37 @@ const TARIFS = [
         ],
         price: "100 €",
         item: "l'étude",
-        icon: <Zap className={IconStyle}/>,
+        icon: <Zap className={IconStyle} />,
         cta: "Simuler mon projet"
     }, {
-        title: "Zénith",
+        title: "Alliance",
         description: "Pour un accompagnement aux petits oignons",
         do: [
-            "Toutes les fonctionnalités Aurore",
+            "Toutes les fonctionnalités Essentiel",
             "Un accompagnement humain le long de l'étude",
             "Etude d'orientation, d'inclinaison d'ombrage",
             "Personnalisation de l'étude selon vos besoins",
             "Rédaction d'un cahier des charges pour installateurs (en option)"
-           
+
         ],
         price: "500 €",
         item: "l'étude",
-        icon: <Sun className={IconStyle}/>,
+        icon: <Sun className={IconStyle} />,
         cta: "Nous contacter"
     }, {
-        title: "Firmament",
+        title: "Sur-mesure",
         description: "Pour un projet d'autoconsommation collective",
         do: [
-            "Toutes les fonctionnalités Zénith",
+            "Toutes les fonctionnalités Alliance",
             "Optimisation de la boucle énegétique",
             "Vulgarisation auprès des futurs consommateurs (en option)",
-    
+
 
         ],
         price: "500-2000 €",
         item: "l'étude, selon projet",
-        icon: <Sparkles className={IconStyle}/>,
-        cta: "Nous contacter"
+        icon: <Sparkles className={IconStyle} />,
+        cta: "Prendre RDV"
     }
 ]
 
@@ -94,13 +94,17 @@ export function Tarifs() {
                                         {tarif.item}
                                     </span>
                                 </div>
-                                <a
-                                    href="/new"
+
+                                <button
+                                    onClick={() => {
+                                        Calendly.initPopupWidget({ url: 'https://calendly.com/antoinetondu/rdv-soleil-bleu?hide_gdpr_banner=1' });
+                                        return false;
+                                    }}
                                     className="font-semibold px-6 py-4 w-fit rounded-sm flex flex-row items-center justify-center group bg-background text-secondary-foreground stroke-ring hover:bg-accent"
                                 >
                                     {tarif.icon}
                                     <span className="text-primary">{tarif.cta}</span>
-                                </a>
+                                </button>
                             </p>
                         </CardFooter>
                     </Card>
