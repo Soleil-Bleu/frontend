@@ -32,7 +32,6 @@ const TARIFS = [
             "Etude d'orientation, d'inclinaison d'ombrage",
             "Personnalisation de l'étude selon vos besoins",
             "Rédaction d'un cahier des charges pour installateurs (en option)"
-
         ],
         price: "500 €",
         item: "l'étude",
@@ -45,8 +44,6 @@ const TARIFS = [
             "Toutes les fonctionnalités Alliance",
             "Optimisation de la boucle énegétique",
             "Vulgarisation auprès des futurs consommateurs (en option)",
-
-
         ],
         price: "500-2000 €",
         item: "l'étude, selon projet",
@@ -62,7 +59,7 @@ export function Tarifs() {
                 Nos Tarifs
             </h2>
             <div className="grid grid-cols-3 px-8 py-16 gap-12 items-start">
-                {(TARIFS).map((tarif, index) => (
+                {TARIFS.map((tarif, index) => (
                     <Card key={index} className="bg-secondary-foreground border-[2px] rounded-lg border-background p-4 flex flex-col gap-4 items-center justify-between h-full">
                         <div>
                             <CardHeader>
@@ -75,8 +72,8 @@ export function Tarifs() {
                             </CardHeader>
                             <CardContent className='font-secondary text-background w-full'>
                                 <ul className="flex flex-col gap-2">
-                                    {(tarif.do).map((item, index) => (
-                                        <li className="flex items-start gap-3">
+                                    {tarif.do.map((item, index) => (
+                                        <li key={index} className="flex items-start gap-3">
                                             <CircleCheck className="min-h-5 h-5 min-w-5 w-5 mt-[2px]" />
                                             {item}
                                         </li>
@@ -97,7 +94,11 @@ export function Tarifs() {
 
                                 <button
                                     onClick={() => {
-                                        Calendly.initPopupWidget({ url: 'https://calendly.com/antoinetondu/rdv-soleil-bleu?hide_gdpr_banner=1' });
+                                        if (index === 0) {
+                                            window.location.href = '/new';
+                                        } else {
+                                            Calendly.initPopupWidget({ url: 'https://calendly.com/antoinetondu/rdv-soleil-bleu?hide_gdpr_banner=1' });
+                                        }
                                         return false;
                                     }}
                                     className="font-semibold px-6 py-4 w-fit rounded-sm flex flex-row items-center justify-center group bg-background text-secondary-foreground stroke-ring hover:bg-accent"
@@ -109,7 +110,7 @@ export function Tarifs() {
                         </CardFooter>
                     </Card>
                 ))}
-            </div >
+            </div>
         </section>
     );
 }
