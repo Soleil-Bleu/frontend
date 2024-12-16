@@ -28,7 +28,8 @@ export function Hero() {
                         <span>En savoir</span>
                         <Plus className="ml-2 h-4 w-4 group-hover:rotate-180 ease-in-out duration-500" />
                     </a> */}
-                    <TooltipProvider>
+
+                    {/* <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger>
                                 <a
@@ -43,7 +44,20 @@ export function Hero() {
                                 <p>Bientôt disponible !</p>
                             </TooltipContent>
                         </Tooltip>
-                    </TooltipProvider>
+                    </TooltipProvider> */}
+
+                    <button
+                        onClick={() => {
+                            document.getElementById("tarifs").scrollIntoView({ behavior: "smooth" });
+                            //Calendly.initPopupWidget({ url: 'https://calendly.com/antoinetondu/rdv-soleil-bleu?hide_gdpr_banner=1' });
+                            //return false;
+                        }}
+                        className="font-semibold px-6 py-4 rounded-sm flex flex-row items-center justify-center group bg-secondary text-secondary-foreground stroke-ring hover:bg-muted"
+                    >
+                        <Network className="mr-2 h-4 w-4 group-hover:rotate-180 ease-in-out duration-500" />
+                        <span >Simuler mon projet d'autoconsommation collective</span>
+                    </button>
+
                     <button
                         onClick={() => {
                             document.getElementById("tarifs").scrollIntoView({ behavior: "smooth" });
