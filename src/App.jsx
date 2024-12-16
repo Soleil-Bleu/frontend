@@ -11,7 +11,7 @@ import { Footer } from "@/components/footer";
 import { FormPage } from '@/components/formPage';
 import { PreForm } from '@/components/preForm';
 import ResultPage from '@/components/results/resultPage';
-import { Graph } from '@/components/results/graph';
+import { ConfirmationPage } from '@/components/results/confirmationPage';
 
 function App() {
   return (
@@ -29,10 +29,10 @@ function App() {
             <Footer />
           </>
         } />
+        <Route path="/confirmation" element={<ConfirmationPage />} />
         <Route path="/result/:id" element={<ResultPage />} />
         <Route path="/new" element={<PreForm />} />
         <Route path="/new/form" element={<FormPage />} />
-        <Route path="/result" element={<Graph />} />
       </Routes>
     </Router>
   );

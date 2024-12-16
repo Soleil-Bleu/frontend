@@ -33,6 +33,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 export function FormPage() {
   const [formData, setFormData] = useState({
     id: '',
+    email: '',
     prix_achat: '',
     type_installation: '',
     localisation: '',
@@ -80,6 +81,7 @@ export function FormPage() {
 
   const validateForm = () => {
     const newErrors = {};
+    if (!formData.email) newErrors.email = "Votre email est requis.";
     if (!formData.prix_achat) newErrors.prix_achat = "Le prix d'achat est requis.";
     if (!formData.type_installation) newErrors.type_installation = "Le type d'installation est requis.";
     if (!formData.localisation) newErrors.localisation = 'Le code postal est requis.';
@@ -99,6 +101,7 @@ export function FormPage() {
 
     const formDataObj = new FormData();
     formDataObj.append('id', formData.id);
+    formDataObj.append('email', formData.email)
     formDataObj.append('prix_achat', formData.prix_achat);
     formDataObj.append('type_centrale', formData.type_installation);
     formDataObj.append('localisation', formData.localisation);
@@ -112,9 +115,21 @@ export function FormPage() {
 
     console.log('Form Data:', Object.fromEntries(formDataObj.entries()));
 
+    const PROD_MODE = 1; // !!! temporarly deactivate while development
     try {
-      const response = await axios.post(`${API_URL}/calc_simulation`, formDataObj);
-      window.location.href = `/result/${formData.id}`;
+      if (PROD_MODE) {
+        const response = await axios.post(`${API_URL}/calc_simulation`, formDataObj);
+      }
+
+      const webhookResponse = await axios.get('https://dev.tondu.work/webhook/new-form', {
+        params: {
+          email: formData.email,
+          id: formData.id
+        }
+      });
+      
+      window.location.href = `/confirmation?email=${encodeURIComponent(formData.email)}`;
+    
     } catch (error) {
       if (error.response && error.response.data.detail) {
         setErrors(error.response.data.detail);
@@ -325,6 +340,20 @@ export function FormPage() {
                     {errors.duree_pret && <span className="text-red-500">{errors.duree_pret}</span>}
                   </div>
                 </div>
+              </div>
+              <div className="flex flex-col col-span-2 w-full items-start gap-2">
+                <Label htmlFor="inclinaison">Votre Email :</Label>
+                <div className='flex flex-row  w-3/4 items-center space-x-2 space-y-0'>
+                  <Input
+                    className="w-3/4"
+                    name="email"
+                    id="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="contact@soleil-bleu.pro" />
+                </div>
+                {errors.email && <span className="text-red-500">{errors.email}</span>}
               </div>
               <button
                 type="submit"
