@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { Mail } from "lucide-react";
 
 export function Footer() {
     return (
@@ -20,14 +20,14 @@ export function Footer() {
                 {`En utilisant des outils mathématiques et informatiques, 
                 nous visons à rendre ces études accessibles aux structures modestes pour démocratiser l'accès à l'énergie solaire.`}
             </span>
-            <div /* https://mailto.vercel.app/ */
-                className="font-secondary font-bold flex flex-row items-center justify-end underline underline-offset-2 col-span-2 group">
-                <a href="mailto:contact@soleil-bleu.pro?subject=Contact%20b%C3%A9n%C3%A9vole%20%7C%20Soleil%20Bleu&body=Hello%2C%20je%20souhaite%20int%C3%A9grer%20l'association%20Soleil%20Bleu%2C%20prenons%20contact%20!"
-                >
-                    {"Nous contacter"}
-                </a>
-                <ArrowUpRight className="h-4 w-4 ml-1 group-hover:rotate-[360deg] ease-in-out duration-500" />
-            </div>
+            <a /* https://mailto.vercel.app/ */
+                href="mailto:contact@soleil-bleu.pro?subject=Contact%20b%C3%A9n%C3%A9vole%20%7C%20Soleil%20Bleu&body=Hello%2C%20je%20souhaite%20int%C3%A9grer%20l'association%20Soleil%20Bleu%2C%20prenons%20contact%20!"
+                className="font-secondary font-bold flex flex-row items-center justify-end underline underline-offset-2 col-span-2 group"> {/* underline underline-offset-2  */}
+                <p>
+                    {"contact@soleil-bleu.com"}
+                </p>
+                <Mail className="h-5 w-5 mx-2 group-hover:rotate-[360deg] ease-in-out duration-500" />
+            </a>
         </div>
     </div>
 

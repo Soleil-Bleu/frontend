@@ -71,7 +71,7 @@ export function PreForm() {
                                 <DialogHeader>
                                     <DialogTitle>Conditions d'utilisation et Politique de Confidentialité</DialogTitle>
                                     <DialogDescription>
-                                    Dernière mise à jour : 05/07/24
+                                    Dernière mise à jour : 12/20/24
                                     </DialogDescription>
                                 </DialogHeader>
                                 <div className='flex flex-col gap-2 text-justify max-h-64 overflow-y-auto pr-2'>
@@ -124,7 +124,7 @@ export function PreForm() {
                                     <ul className="list-disc list-inside">
                                         <li>Droit d'accès, de rectification, d'effacement, de limitation du traitement, de portabilité et d'opposition</li>
                                     </ul>
-                                    <p>Pour exercer ces droits, contactez-nous à <a href="mailto:sam.tourvieille@gmail.com" className="text-blue-500 underline">sam.tourvieille@gmail.com</a>.</p>
+                                    <p>Pour exercer ces droits, contactez-nous à <a href="mailto:contact@soleil-bleu.pro" className="text-blue-500 underline">contact@soleil-bleu.pro</a>.</p>
 
                                     <h2 className="font-semibold">6. Sécurité des données</h2>
                                     <p>Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles pour protéger vos données personnelles.</p>
@@ -136,7 +136,7 @@ export function PreForm() {
                                     <p>Nous nous réservons le droit de modifier cette politique à tout moment. Les modifications seront publiées sur cette page avec une nouvelle date de mise à jour. Veuillez consulter cette page régulièrement.</p>
 
                                     <h2 className="font-semibold">9. Contact</h2>
-                                    <p>Pour toute question ou préoccupation, veuillez nous contacter à : <a href="mailto:sam.tourvieille@gmail.com" className="text-blue-500 underline">sam.tourvieille@gmail.com</a></p>
+                                    <p>Pour toute question ou préoccupation, veuillez nous contacter à : <a href="mailto:contact@soleil-bleu.pro" className="text-blue-500 underline">contact@soleil-bleu.pro</a></p>
 
                                     <p>En utilisant Soleil Bleu, vous reconnaissez avoir lu et compris ces conditions et vous acceptez d'être lié par ces termes.</p>
                                 </div>

@@ -89,14 +89,13 @@ const CompassSelect = ({ selectedOrientation, onSelect, errors }) => {
         activeColor: 'transparent',
         defaultColor: 'transparent'
       }}
-      className='w-1/2'
     />
-    <div className="flex items-center justify-center p-2 rounded-sm text-primary">
+    <div className="flex items-center justify-center ml-8 w-3.5 rounded-sm text-primary">
       <div className="flex flex-col w-full">
-        <span className="font-semibold"> {/* Fixed width for cardinal direction */}
+        <span className="font-semibold">
           {getCardinalDirection(selectedOrientation)}
         </span>
-        <span className="font-light"> {/* Fixed width for orientation */}
+        <span className="font-light">
           {selectedOrientation}°
         </span>
         

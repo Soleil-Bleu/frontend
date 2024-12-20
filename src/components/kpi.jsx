@@ -14,12 +14,12 @@ export function Kpi() {
                     18 boucles
                 </h3>
                 <span className="font-secondary">
-                    d'autoconsommation collectives crées
+                    d'autoconsommation collectives créées
                 </span>
             </div>
             <div className="border-t-[2px] border-background">
                 <h3 className='text-5xl font-bold tracking-tight mt-8'>
-                    2 ingénieurs
+                    3 ingénieurs
                 </h3>
                 <span className="font-secondary">
                     passionnés par leur travail

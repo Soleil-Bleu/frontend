@@ -6,7 +6,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import { CircleCheck, Zap, Sun, Sparkles } from "lucide-react";
+import { CircleCheck, Zap, Sun } from "lucide-react";
 
 const IconStyle = "mr-2 h-4 w-4 text-secondary-foreground group-hover:rotate-180 ease-in-out duration-500"
 const TARIFS = [
@@ -17,7 +17,7 @@ const TARIFS = [
             "Analyse de votre profil de consommation",
             "Simulations selon différents scénarios",
             "Projections financières sur la durée de vie du projet",
-            "Rapport de synthèses",
+            "Rapport de synthèse",
         ],
         price: "100 €",
         item: "l'étude",
@@ -28,26 +28,27 @@ const TARIFS = [
         description: "Pour un accompagnement aux petits oignons",
         do: [
             "Toutes les fonctionnalités Essentiel",
-            "Un accompagnement humain le long de l'étude",
-            "Etude d'orientation, d'inclinaison d'ombrage",
+            "Un accompagnement humain tout le long de l'étude",
+            "Étude d'orientation, d'inclinaison et d'ombrage",
             "Personnalisation de l'étude selon vos besoins",
-            "Rédaction d'un cahier des charges pour installateurs (en option)"
+            "Rédaction d'un cahier des charges pour installateurs"
         ],
         price: "500 €",
         item: "l'étude",
         icon: <Sun className={IconStyle} />,
-        cta: "Nous contacter"
+        cta: "Prendre RDV"
     }, {
-        title: "Sur-mesure",
+        title: "Communauté",
         description: "Pour un projet d'autoconsommation collective",
         do: [
             "Toutes les fonctionnalités Alliance",
-            "Optimisation de la boucle énegétique",
+            "Recherche de la combinaison producteurs/consommateurs la plus optimisée",
+            "Optimisation de la boucle énergétique",
             "Vulgarisation auprès des futurs consommateurs (en option)",
         ],
         price: "500-2000 €",
         item: "l'étude, selon projet",
-        icon: <Sparkles className={IconStyle} />,
+        icon: <Sun className={IconStyle} />,//<Sparkles className={IconStyle} />,
         cta: "Prendre RDV"
     }
 ]

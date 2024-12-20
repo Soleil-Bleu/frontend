@@ -288,7 +288,7 @@ export function FormPage() {
                   </DialogContent>
                 </Dialog>
               </div>
-              <div className='flex flex-col col-span-2 gap-4 bg-secondary/40 p-4 rounded-md'>
+              {/* <div className='flex flex-col col-span-2 gap-4 bg-secondary/40 p-4 rounded-md'>
                 <div className="flex flex-row items-center gap-2">
                   <Label className="text-lg">Prêt</Label>
                   <p className='text-primary/80 text-xs'>(optionnel, seulement si vous en envisagez un)</p>
@@ -340,7 +340,7 @@ export function FormPage() {
                     {errors.duree_pret && <span className="text-red-500">{errors.duree_pret}</span>}
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="flex flex-col col-span-2 w-full items-start gap-2">
                 <Label htmlFor="inclinaison">Votre Email :</Label>
                 <div className='flex flex-row  w-3/4 items-center space-x-2 space-y-0'>

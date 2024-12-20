@@ -24,7 +24,7 @@ function App() {
             <Second />
             <Kpi />
             <Third />
-            <Slider />
+            {/* <Slider /> */}
             <Tarifs />
             <Footer />
           </>
