@@ -98,7 +98,7 @@ export function Tarifs() {
                                         if (index === 0) {
                                             window.location.href = '/new';
                                         } else {
-                                            Calendly.initPopupWidget({ url: 'https://calendly.com/antoinetondu/rdv-soleil-bleu?hide_gdpr_banner=1' });
+                                            Calendly.initPopupWidget({ url: 'https://calendly.com/samuel71999/30min?hide_gdpr_banner=1' });
                                         }
                                         return false;
                                     }}

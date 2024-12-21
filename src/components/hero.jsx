@@ -49,7 +49,7 @@ export function Hero() {
                     <button
                         onClick={() => {
                             document.getElementById("tarifs").scrollIntoView({ behavior: "smooth" });
-                            //Calendly.initPopupWidget({ url: 'https://calendly.com/antoinetondu/rdv-soleil-bleu?hide_gdpr_banner=1' });
+                            //Calendly.initPopupWidget({ url: 'https://calendly.com/samuel71999/30min?hide_gdpr_banner=1' });
                             //return false;
                         }}
                         className="font-semibold px-6 py-4 rounded-sm flex flex-row items-center justify-center group bg-secondary text-secondary-foreground stroke-ring hover:bg-muted"
@@ -61,7 +61,7 @@ export function Hero() {
                     <button
                         onClick={() => {
                             document.getElementById("tarifs").scrollIntoView({ behavior: "smooth" });
-                            //Calendly.initPopupWidget({ url: 'https://calendly.com/antoinetondu/rdv-soleil-bleu?hide_gdpr_banner=1' });
+                            //Calendly.initPopupWidget({ url: 'https://calendly.com/samuel71999/30min?hide_gdpr_banner=1' });
                             //return false;
                         }}
                         className="font-semibold px-6 py-4 rounded-sm flex flex-row items-center justify-center group bg-primary stroke-ring hover:bg-accent-foreground"
